@@ -64,6 +64,7 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  */
 fun ageDescription(age: Int): String = TODO()
 
+
 /**
  * Простая
  *
@@ -73,7 +74,8 @@ fun ageDescription(age: Int): String = TODO()
  */
 fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
-                   t3: Double, v3: Double): Double = TODO()
+                   t3: Double, v3: Double): Double =
+        (t1 * v1 + t2 * v2 + t3 * v3)/2
 
 /**
  * Простая
