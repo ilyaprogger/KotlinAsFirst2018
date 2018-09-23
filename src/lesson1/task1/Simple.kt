@@ -83,7 +83,7 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double =
  * Вывести значение того же угла в радианах (например, 0.63256).
  */
 fun angleInRadian(grad: Int, min: Int, sec: Int): Double =
-        grad*PI/180 + min*PI/10800 + sec*PI/648000
+        grad * PI / 180 + min * PI / 10800 + sec * PI / 648000
 /**
  * Тривиальная
  *
@@ -91,7 +91,7 @@ fun angleInRadian(grad: Int, min: Int, sec: Int): Double =
  * Например, расстояние между (3, 0) и (0, 4) равно 5
  */
 fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double =
-        sqrt(sqr(x1-x2)+sqr(y1-y2))
+        sqrt(sqr(x1 - x2) + sqr(y1 - y2))
 
 /**
  * Простая
