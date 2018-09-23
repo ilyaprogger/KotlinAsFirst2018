@@ -2,6 +2,8 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import java.lang.Math.pow
+import java.lang.Math.sqrt
 
 /**
  * Пример
@@ -29,7 +31,7 @@ fun isNumberHappy(number: Int): Boolean {
  * Считать, что ферзи не могут загораживать друг друга.
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
-    return if(y1 == y2 && x1 != x2 || x1 == x2 && y1 != y2 || y1 - y2 == x1 - x2 || y1 - y2 == x2 - x1 || y2 - y1 == x1 - x2 || y2 - y1 == x2 - x1) true
+    return if (y1 == y2 && x1 != x2 || x1 == x2 && y1 != y2 || y1 - y2 == x1 - x2 || y1 - y2 == x2 - x1 || y2 - y1 == x1 - x2 || y2 - y1 == x2 - x1) true
     else false
 }
 
@@ -42,8 +44,8 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
  */
 fun daysInMonth(month: Int, year: Int): Int {
     return if (month == 4 || month == 6 || month == 9 || month == 11) 30
-    else if ( (month == 2 && year % 4 != 0) || (month==2 && year % 100 == 0)) 28
-    else if (( month == 2 && year % 4 == 0)|| (month==2 && year % 100 == 0)) 29
+    else if ((month == 2 && year % 4 != 0) || (month == 2 && year % 100 == 0 && year % 400 != 0)) 28
+    else if ((month == 2 && year % 4 == 0) || (month == 2 && year % 100 == 0)) 29
     else 31
     }
 
@@ -56,7 +58,10 @@ fun daysInMonth(month: Int, year: Int): Int {
  * Вернуть true, если утверждение верно
  */
 fun circleInside(x1: Double, y1: Double, r1: Double,
-                 x2: Double, y2: Double, r2: Double): Boolean = TODO()
+                 x2: Double, y2: Double, r2: Double): Boolean {
+    val d = sqrt(pow(x2 - x1, 2.0) + pow(y2 - y1, 2.0))
+    return r2 >= d + r1
+}
 
 /**
  * Средняя
@@ -67,4 +72,7 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = TODO()
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+    return if (a <= r && b <= s || a <= r && c <= s || a <= s && b <= r || a <= s && c <= r || b <= r && c <= s || b <= s && c <= r) true
+    else false
+}
