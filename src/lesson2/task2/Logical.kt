@@ -59,7 +59,7 @@ fun daysInMonth(month: Int, year: Int): Int {
  */
 fun circleInside(x1: Double, y1: Double, r1: Double,
                  x2: Double, y2: Double, r2: Double): Boolean {
-    val d = sqrt(pow(x2 - x1, 2.0) + pow(y2 - y1, 2.0))
+    val d = sqrt(pow(x2 - x1 , 2.0) + pow(y2 - y1 , 2.0))
     return r2 >= d + r1
 }
 
