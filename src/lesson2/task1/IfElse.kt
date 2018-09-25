@@ -66,7 +66,7 @@ fun ageDescription(age: Int): String = when {
     (age % 10 > 1) && (age % 10 <5 ) && (age > 21) -> "$age года"
     (age % 10 > 4) || (((age % 100) < 20) && ((age % 100) > 4)) -> "$age лет"
     (age % 10 == 1) -> "$age год"
-    else -> "0"
+    else -> "$age года"
 }
 
 
@@ -133,9 +133,9 @@ else if (bishopX - kingX == bishopY - kingY && kingX != rookX && kingY != rookY 
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int{
-    return if ((a * a + b * b - c * c) / 2 * a * b > 0 && (b * b + c * c - a * a) / 2 * c * b > 0 && (a * a + c * c - b * b) / 2 * a * c > 0) 0
+    return if ((a * a + b * b - c * c) / 2.0 * a * b > 0 && (b * b + c * c - a * a) / 2.0 * c * b > 0 && (a * a + c * c - b * b) / 2.0 * a * c > 0) 0
     else if (a * a == (b * b + c * c) || b * b == (c * c + a * a) || c * c == (b * b + a * a)) 1
-    else if ((a * a + b * b - c * c) / 2 * a * b < 0 || (b * b + c * c - a * a) / 2 * c * b < 0 || (a * a + c * c - b * b) / 2 * a * c > 0) 2
+    else if ((a * a + b * b - c * c) / 2.0 * a * b < 0 || (b * b + c * c - a * a) / 2.0 * c * b < 0 || (a * a + c * c - b * b) / 2.0 * a * c > 0) 2
     else -1
 }
 

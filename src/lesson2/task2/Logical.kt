@@ -2,7 +2,6 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
-import java.lang.Math.pow
 import java.lang.Math.sqrt
 
 /**
@@ -59,8 +58,7 @@ fun daysInMonth(month: Int, year: Int): Int {
  */
 fun circleInside(x1: Double, y1: Double, r1: Double,
                  x2: Double, y2: Double, r2: Double): Boolean {
-    val d = sqrt(pow(x2 - x1 , 2.0) + pow(y2 - y1 , 2.0))
-    return r2 >= d + r1
+    return r2 >= r1 + sqrt(sqr(x2 - x1) + sqr(y2 - y1))
 }
 
 /**
@@ -73,6 +71,6 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    return if (a <= r && b <= s || a <= r && c <= s || a <= s && b <= r || a <= s && c <= r || b <= r && c <= s || b <= s && c <= r) true
+    return if (a <= r && (b <= s ||  c <= s) || a <= s && (b <= r || c <= r) || b <= r && c <= s || b <= s && c <= r) true
     else false
 }
