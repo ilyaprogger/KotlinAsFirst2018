@@ -1,6 +1,8 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson3.task1
 
+import lesson7.task1.markdownToHtml
 import kotlin.math.sqrt
 
 /**
@@ -38,7 +40,7 @@ fun isPrime(n: Int): Boolean {
  */
 fun isPerfect(n: Int): Boolean {
     var sum = 1
-    for (m in 2..n/2) {
+    for (m in 2..n / 2) {
         if (n % m > 0) continue
         sum += m
         if (sum > n) break
@@ -66,7 +68,15 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var p = 0
+    var number = n
+    do {
+        p++
+        number = number / 10
+    } while (number > 0)
+    return p
+}
 
 /**
  * Простая
@@ -74,7 +84,18 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var m = 1
+    var p = 0
+    for (i in 1..n) {
+        m = m + p
+        p = m - p
+    }
+    if (n <= 2)
+        return 1
+    else return p
+}
+
 
 /**
  * Простая
@@ -82,21 +103,52 @@ fun fib(n: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var k = m * n
+    var q = 0
+    when {
+        n > m -> q = n
+        else -> q = m
+    }
+    for (i in q..k) {
+        if (i % n == 0 && i % m == 0) {
+            k = i
+            break
+        }
+    }
+    return k
+}
 
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    var k = n
+    for (i in 2..sqrt(n.toDouble()).toInt()) {
+        if (n % i == 0 && k > i)
+            k = i
+    }
+    return k
+}
 
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    var k = 1
+    for (m in 2..sqrt(n.toDouble()).toInt()) {
+        if (n % m == 0)
+            for (i in n / 2 downTo k) {
+                if (n % i == 0 && k < i)
+                    k = i
+            }
+    }
+    return k
+}
 
 /**
  * Простая
