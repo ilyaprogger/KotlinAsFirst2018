@@ -117,12 +117,19 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int{
-    return if (kingX == rookX && kingY != rookY && bishopX - kingX != bishopY - kingY && bishopX - kingX != kingY - bishopY && kingY - bishopY != bishopX - kingX) 1
-    else if (kingY == rookY && kingX != rookX && bishopX - kingX != bishopY - kingY && bishopX - kingX != kingY - bishopY && kingY - bishopY != bishopX - kingX) 1
-else if (bishopX - kingX == bishopY - kingY && kingX != rookX && kingY != rookY && kingY != rookY && kingX != rookX) 2
-    else if (bishopX - kingX == kingY - bishopY && kingX != rookX && kingY != rookY && kingY != rookY && kingX != rookX) 2
-    else if (bishopX - kingX == bishopY - kingY && kingX != rookX && kingY != rookY && kingY != rookY && kingX != rookX) 2
-    else if (kingX != rookX && kingY != rookY && kingY != rookY && kingX != rookX && bishopX - kingX != bishopY - kingY && bishopX - kingX != kingY - bishopY && kingY - bishopY != bishopX - kingX) 0
+    return if (kingX == rookX && kingY != rookY && bishopX - kingX != bishopY - kingY &&
+            bishopX - kingX != kingY - bishopY && kingY - bishopY != bishopX - kingX) 1
+    else if (kingY == rookY && kingX != rookX && bishopX - kingX != bishopY - kingY &&
+            bishopX - kingX != kingY - bishopY && kingY - bishopY != bishopX - kingX) 1
+else if (bishopX - kingX == bishopY - kingY && kingX != rookX && kingY != rookY &&
+            kingY != rookY && kingX != rookX) 2
+    else if (bishopX - kingX == kingY - bishopY && kingX != rookX &&
+            kingY != rookY && kingY != rookY && kingX != rookX) 2
+    else if (bishopX - kingX == bishopY - kingY && kingX != rookX && kingY != rookY &&
+            kingY != rookY && kingX != rookX) 2
+    else if (kingX != rookX && kingY != rookY && kingY != rookY && kingX != rookX &&
+            bishopX - kingX != bishopY - kingY &&
+            bishopX - kingX != kingY - bishopY && kingY - bishopY != bishopX - kingX) 0
     else 3
 }
 

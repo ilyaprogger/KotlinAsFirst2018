@@ -157,7 +157,17 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    val p = minOf(m, n)
+    var q = 0
+    for (i in p downTo 2) {
+        if (m % i == 0 && n % i == 0)
+        q++
+        if (q > 0)
+            break
+    }
+    return q == 0
+}
 
 /**
  * Простая
