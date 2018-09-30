@@ -162,7 +162,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
     var q = 0
     for (i in p downTo 2) {
         if (m % i == 0 && n % i == 0)
-        q++
+            q++
         if (q > 0)
             break
     }
