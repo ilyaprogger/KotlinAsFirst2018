@@ -47,7 +47,7 @@ else 31
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
 fun daysInMonth(month: Int, year: Int): Int {
-   return when (month ){
+    return when (month) {
         4, 6, 9, 11 -> 30
         2 -> if ((month == 2 && year % 4 != 0) || (month == 2 && year % 100 == 0 && year % 400 != 0)) 28
         else 29
@@ -64,9 +64,8 @@ fun daysInMonth(month: Int, year: Int): Int {
  * Вернуть true, если утверждение верно
  */
 fun circleInside(x1: Double, y1: Double, r1: Double,
-                 x2: Double, y2: Double, r2: Double): Boolean {
-    return r2 >= r1 + sqrt(sqr(x2 - x1) + sqr(y2 - y1))
-}
+                 x2: Double, y2: Double, r2: Double): Boolean = r2 >= r1 + sqrt(sqr(x2 - x1) + sqr(y2 - y1))
+
 
 /**
  * Средняя
@@ -77,6 +76,6 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    return (a <= r && (b <= s || c <= s) || a <= s && (b <= r || c <= r) || b <= r && c <= s || b <= s && c <= r)
-}
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
+        (a <= r && (b <= s || c <= s) || a <= s && (b <= r || c <= r) || b <= r && c <= s || b <= s && c <= r)
+
