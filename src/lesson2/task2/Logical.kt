@@ -3,6 +3,7 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import java.lang.Math.abs
 import java.lang.Math.sqrt
 
 /**
@@ -32,17 +33,13 @@ fun isNumberHappy(number: Int): Boolean {
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
     return (y1 == y2 && x1 != x2 || x1 == x2 && y1 != y2 ||
-            y1 - y2 == x1 - x2 || y1 - y2 == x2 - x1 ||
-            y2 - y1 == x1 - x2 || y2 - y1 == x2 - x1)
+            y1 - y2 == abs(x1 - x2) || y2 - y1 == abs(x1 - x2))
 }
 
 
 /**
  * Простая
- * return if (month == 4 || month == 6 || month == 9 || month == 11) 30
-else if ((month == 2 && year % 4 != 0) || (month == 2 && year % 100 == 0 && year % 400 != 0)) 28
-else if ((month == 2 && year % 4 == 0) || (month == 2 && year % 100 == 0)) 29
-else 31
+ *
  * Дан номер месяца (от 1 до 12 включительно) и год (положительный).
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
@@ -78,4 +75,3 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
         (a <= r && (b <= s || c <= s) || a <= s && (b <= r || c <= r) || b <= r && c <= s || b <= s && c <= r)
-
