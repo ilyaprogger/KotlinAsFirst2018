@@ -159,14 +159,13 @@ fun maxDivisor(n: Int): Int {
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
     val p = minOf(m, n)
-    var q = 0
-    for (i in p downTo 2) {
+    var q = maxOf(m, n)
+    if (m % 2 == 0 && n % 2 == 0 || q % p == 0) return false
+    for (i in 3..sqrt(p.toDouble()).toInt() step 2)
         if (m % i == 0 && n % i == 0)
-            q++
-        if (q > 0)
-            break
-    }
-    return q == 0
+            return false
+
+    return true
 }
 
 /**
@@ -176,7 +175,14 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
+fun squareBetweenExists(m: Int, n: Int): Boolean {
+    var q = 0
+    for (i in 1..sqrt(n.toDouble()).toInt()) {
+        if (i * i <= n && i * i >= m)
+            q++
+    }
+    return q != 0
+}
 
 /**
  * Средняя
@@ -194,7 +200,22 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var x1 = x
+    var q = 0
+    while (x != 1) {
+        if (x1 % 2 == 0) {
+            x1 = x / 2
+q++
+        } else if (x1 % 2 != 0) {
+            x1 = x * 3 + 1
+q++
+        }
+
+    }
+    return q
+}
+
 
 /**
  * Средняя
