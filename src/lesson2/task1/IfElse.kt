@@ -3,7 +3,9 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import lesson1.task1.sqr
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 /**
@@ -151,12 +153,13 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    return when { ((a * a + b * b - c * c) / 2 * a * b > 0 && (b * b + c * c - a * a) / 2
-            * c * b > 0 && (a * a + c * c - b * b) / 2 * a * c > 0) -> 0
-        (a * a == (b * b + c * c) || b * b == (c * c + a * a) || c * c == (b * b + a * a)) -> 1
-        ((a * a + b * b - c * c) / 2 * a * b < 0 || (b * b + c * c - a * a) / 2
-                * c * b < 0 || (a * a + c * c - b * b) / 2 * a * c > 0) -> 2
-        a + b > c || a + b > c || b + c > a -> -1
+    val x = max(a, max(b, c))
+    val y = min(a, min(b, c))
+    val z = a + b + c - x - y
+    return when {
+        (x < y + z) && (sqr(x) == sqr(y) + sqr(z)) -> 1
+        (x < y + z) && (sqr(x) < sqr(y) + sqr(z)) -> 0
+        (x < y + z) && (sqr(x) > sqr(y) + sqr(z)) -> 2
         else -> -1
     }
 }
