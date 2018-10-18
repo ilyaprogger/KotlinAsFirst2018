@@ -77,7 +77,7 @@ fun digitNumber(n: Int): Int {
     do {
         p++
         number /= 10
-    } while (number > 0)
+    } while (number != 0)
     return p
 }
 
@@ -176,12 +176,12 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-    var q = 0
+    var q = false
     for (i in 1..sqrt(n.toDouble()).toInt()) {
         if (i * i <= n && i * i >= m)
-            q++
+            q = true
     }
-    return q != 0
+    return q
 }
 
 /**
@@ -262,7 +262,7 @@ fun cos(x: Double, eps: Double): Double {
 fun revert(n: Int): Int {
     var p = n
     var q = 0
-    while (p > 0) {
+    while (p != 0) {
         q += p % 10
         q *= 10
         p /= 10
@@ -279,16 +279,7 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean {
-    var p = n
-    var q = 0
-    while (p > 0) {
-        q += p % 10
-        q *= 10
-        p /= 10
-    }
-    return q / 10 == n
-}
+fun isPalindrome(n: Int)= n == revert(n)
 
 /**
  * Средняя
@@ -327,11 +318,12 @@ fun squareSequenceDigit(n: Int): Int {
         num += digitNumber(q * q)
     }
     var p = q * q
+    var m = 1
     while (num > n) {
+        m *= 10
         num -= 1
-        p = q * q / 10
     }
-    return p % 10
+    return p / m % 10
 }
 
 /**

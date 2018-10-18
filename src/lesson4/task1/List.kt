@@ -117,6 +117,7 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  */
 fun abs(v: List<Double>): Double = TODO()
 
+
 /**
  * Простая
  *
