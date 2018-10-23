@@ -241,12 +241,14 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
 fun convert(n: Int, base: Int): List<Int> {
-    var MutaList = mutableListOf<Int>()
+    val MutaList = mutableListOf<Int>()
     var p = n
-    while (p != 0) {
-        MutaList.add(p % base)
-        p /= base
-    }
+    if (n != 0) {
+        while (p != 0) {
+            MutaList.add(p % base)
+            p /= base
+        }
+    } else MutaList.add(0)
     return MutaList.reversed()
 }
 
@@ -300,18 +302,17 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * Например: str = "13c", base = 14 -> 250
  */
 fun decimalFromString(str: String, base: Int): Int {
-    var q = 0.0
-    var p = 0.0
-    for (i in str.length - 1 downTo 0) {
-        if (str[i] <= '9') {
-            q += str[i].toInt() * pow(base.toDouble(), p)
-            p++
-        } else
-            q += (str[i].toLowerCase() - 'a' + 10) * pow(base.toDouble(), p)
-        p++
+    var p = 0
+    var q = 1
+    str.reversed().forEach {
+        val bam = if (it <= '9') it - '0'
+        else (it + 10 - 'a')
+        p += bam * q
+        q *= base
     }
-    return q.toInt()
+    return p
 }
+
 
 /**
  * Сложная
