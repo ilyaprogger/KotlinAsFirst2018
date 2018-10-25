@@ -147,12 +147,9 @@ fun mean(list: List<Double>): Double =
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    var p = 0.0
-    for (element in list) {
-        p += element
-    }
+    val p = mean(list)
     for (i in 0 until list.size) {
-        list[i] = list[i] - p / list.size
+        list[i] = list[i] - p
     }
     return list
 }
@@ -214,13 +211,13 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
 fun factorize(n: Int): List<Int> {
     var q = n
     var p = 0
-    val Typolist = mutableListOf<Int>()
+    val list = mutableListOf<Int>()
     while (q != 1) {
-        Typolist.add(minDivisor(q))
-        q /= Typolist[p]
+        list.add(minDivisor(q))
+        q /= list[p]
         p++
     }
-    return Typolist
+    return list
 }
 
 
@@ -241,15 +238,15 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
 fun convert(n: Int, base: Int): List<Int> {
-    val MutaList = mutableListOf<Int>()
+    val list = mutableListOf<Int>()
     var p = n
     if (n != 0) {
         while (p != 0) {
-            MutaList.add(p % base)
+            list.add(p % base)
             p /= base
         }
-    } else MutaList.add(0)
-    return MutaList.reversed()
+    } else list.add(0)
+    return list.reversed()
 }
 
 /**
@@ -265,10 +262,9 @@ fun convertToString(n: Int, base: Int): String {
     var p = n
     while (p != 0) {
         val num = p % base
-        when (num < 10) {
-            true -> q += num.toString()
-            else -> q += ('a' + (num - 10))
-        }
+        if (num < 10)
+            q += num.toString()
+        else q += ('a' + (num - 10))
         p /= base
     }
     if (n == 0) q = "0"
@@ -322,7 +318,28 @@ fun decimalFromString(str: String, base: Int): Int {
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    val Blist = listOf("I", "V", "X", "L", "C", "D", "M")
+    val result = " "
+    var p = n
+    fun www(q: Int): String {
+        return when (n) {
+            1 -> Blist[0]
+            2 -> Blist[0] + Blist[0]
+            3 -> Blist[0] + Blist[0] + Blist[0]
+            4 -> Blist[0] + Blist[1]
+            5 -> Blist[1]
+            6 -> Blist[1] + Blist[0]
+            7 -> Blist[1] + Blist[0] + Blist[0]
+            8 -> Blist[1] + Blist[0] + Blist[0] + Blist[0]
+            9 -> Blist[0] + Blist[2]
+            else -> " "
+        }
+    }
+
+    return result // я еще не дописал ее!
+}
+
 
 /**
  * Очень сложная

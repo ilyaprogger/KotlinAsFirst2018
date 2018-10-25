@@ -4,6 +4,7 @@ package lesson2.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
@@ -101,18 +102,13 @@ fun timeForHalfWay(t1: Double, v1: Double,
  */
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
-                       rookX2: Int, rookY2: Int): Int {
-    return when { ((kingX == rookX1 && kingY != rookY1 && kingY != rookY2 && kingX != rookX2) ||
-            (kingY == rookY1 && kingY != rookY2 && kingY != rookY2 && kingX != rookX2)) -> 1
-        ((kingX == rookX2 && kingY != rookY2 && kingY != rookY1 && kingX != rookX1) ||
-                (kingY == rookY2 && kingX != rookX2 && kingY != rookY1 && kingY != rookY1 && kingX != rookX1)) -> 2
-        ((kingX == rookX1 && kingY != rookY1 && kingX == rookX2 && kingY != rookY2) ||
-                (kingX == rookX1 && kingY != rookY1 && kingY == rookY2 && kingX != rookX2) ||
-                (kingY == rookX1 && kingX != rookX1 && kingY == rookY2 && kingX != rookX2) ||
-                (kingY == rookY1 && kingX != rookX1 && kingX == rookX2 && kingY != rookY2)) -> 3
-        else -> 0
-    }
-}
+                       rookX2: Int, rookY2: Int): Int =
+        if (rookX1 == kingX || rookY1 == kingY) {
+            if (rookX2 == kingX || rookY2 == kingY) 3
+            else 1
+        } else if (rookX2 == kingX || rookY2 == kingY) 2
+        else 0
+
 
 /**
  * Простая
@@ -126,23 +122,14 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
  */
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
-                          bishopX: Int, bishopY: Int): Int {
-    return when { (kingX == rookX && kingY != rookY && bishopX - kingX != bishopY - kingY &&
-            bishopX - kingX != kingY - bishopY && kingY - bishopY != bishopX - kingX) -> 1
-        (kingY == rookY && kingX != rookX && bishopX - kingX != bishopY - kingY && bishopX
-                - kingX != kingY - bishopY && kingY - bishopY != bishopX - kingX) -> 1
-        (bishopX - kingX == bishopY - kingY && kingX != rookX && kingY != rookY &&
-                kingY != rookY && kingX != rookX) -> 2
-        (bishopX - kingX == kingY - bishopY && kingX != rookX &&
-                kingY != rookY && kingY != rookY && kingX != rookX) -> 2
-        (bishopX - kingX == bishopY - kingY && kingX != rookX && kingY != rookY &&
-                kingY != rookY && kingX != rookX) -> 2
-        (kingX != rookX && kingY != rookY && kingY != rookY && kingX != rookX &&
-                bishopX - kingX != bishopY - kingY &&
-                bishopX - kingX != kingY - bishopY && kingY - bishopY != bishopX - kingX) -> 0
-        else -> 3
-    }
-}
+                          bishopX: Int, bishopY: Int): Int =
+        if (rookX == kingX || rookY == kingY) {
+            if (abs(bishopX - kingX) == (abs(bishopY - kingY))) {
+                3
+            } else 1
+        } else if (abs(bishopX - kingX) == (abs(bishopY - kingY))) {
+            2
+        } else 0
 
 /**
  * Простая
