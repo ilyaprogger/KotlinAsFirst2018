@@ -197,7 +197,7 @@ fun polynom(p: List<Double>, x: Double): Double {
  */
 fun accumulate(list: MutableList<Double>): MutableList<Double> {
     for (i in 1 until list.size)
-        list[i] += list.subList(0, i).sum() - list.subList(0, i - 1).sum()
+        list[i] += list[i - 1]
     return list
 }
 
@@ -318,26 +318,64 @@ fun decimalFromString(str: String, base: Int): Int {
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
+val romelist = listOf("I", "V", "X", "L", "C", "D", "M")
 fun roman(n: Int): String {
-    val Blist = listOf("I", "V", "X", "L", "C", "D", "M")
-    val result = " "
+    var result = ""
     var p = n
-    fun www(q: Int): String {
-        return when (n) {
-            1 -> Blist[0]
-            2 -> Blist[0] + Blist[0]
-            3 -> Blist[0] + Blist[0] + Blist[0]
-            4 -> Blist[0] + Blist[1]
-            5 -> Blist[1]
-            6 -> Blist[1] + Blist[0]
-            7 -> Blist[1] + Blist[0] + Blist[0]
-            8 -> Blist[1] + Blist[0] + Blist[0] + Blist[0]
-            9 -> Blist[0] + Blist[2]
-            else -> " "
+    result += firstnumber(p) + secondnumber(p) + thirdnumber(p)
+    if (p > 999) {
+        while (p > 0) {
+            p -= 1000
+            result += romelist[6]
+            if (p < 999) break
         }
     }
+    return result.reversed()
+}
 
-    return result // я еще не дописал ее!
+fun firstnumber(q: Int): String {
+    return when (q % 10) {
+        1 -> romelist[0]
+        2 -> romelist[0] + romelist[0]
+        3 -> romelist[0] + romelist[0] + romelist[0]
+        4 -> romelist[1] + romelist[0]
+        5 -> romelist[1]
+        6 -> romelist[0] + romelist[1]
+        7 -> romelist[0] + romelist[0] + romelist[1]
+        8 -> romelist[0] + romelist[0] + romelist[0] + romelist[1]
+        9 -> romelist[2] + romelist[0]
+        else -> ""
+    }
+}
+
+fun secondnumber(q: Int): String {
+    return when ((q / 10) % 10) {
+        1 -> romelist[2]
+        2 -> romelist[2] + romelist[2]
+        3 -> romelist[2] + romelist[2] + romelist[2]
+        4 -> romelist[3] + romelist[2]
+        5 -> romelist[3]
+        6 -> romelist[2] + romelist[3]
+        7 -> romelist[2] + romelist[2] + romelist[3]
+        8 -> romelist[2] + romelist[2] + romelist[2] + romelist[3]
+        9 -> romelist[4] + romelist[2]
+        else -> ""
+    }
+}
+
+fun thirdnumber(q: Int): String {
+    return when ((q / 100) % 10) {
+        1 -> romelist[4]
+        2 -> romelist[4] + romelist[4]
+        3 -> romelist[4] + romelist[4] + romelist[4]
+        4 -> romelist[5] + romelist[4]
+        5 -> romelist[5]
+        6 -> romelist[4] + romelist[5]
+        7 -> romelist[4] + romelist[4] + romelist[5]
+        8 -> romelist[4] + romelist[4] + romelist[4] + romelist[5]
+        9 -> romelist[6] + romelist[4]
+        else -> ""
+    }
 }
 
 
