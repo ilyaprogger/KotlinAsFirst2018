@@ -115,10 +115,10 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  */
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val newMap = mutableMapOf<Int, List<String>>()
-    for (k in grades) {
-        newMap[k.value] = newMap.getOrDefault(k.value, listOf()) + k.key
-    }
-    for (n in newMap) newMap[n.key] = n.value.sortedDescending()
+    for ((q, p) in grades)
+        newMap[p] = newMap.getOrDefault(p, listOf()) + q
+    for ((q, p) in newMap)
+        newMap[q] = p.sortedDescending()
     return newMap
 }
 
@@ -145,7 +145,17 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = a.all 
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
-fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> =TODO()
+fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
+    val resMap = mutableMapOf<String, Double>()
+    val newMap = mutableMapOf<String, List<Double>>()
+    for ((q, p) in stockPrices)
+        newMap[q] = newMap.getOrDefault(q, mutableListOf()) + p
+    for ((p, q) in newMap) {
+        val pq = q.sum() / q.size
+        resMap[p] = pq
+    }
+    return resMap
+}
 
 /**
  * Средняя
