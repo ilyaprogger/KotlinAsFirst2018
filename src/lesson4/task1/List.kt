@@ -319,6 +319,7 @@ fun decimalFromString(str: String, base: Int): Int {
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 val romelist = listOf("I", "V", "X", "L", "C", "D", "M")
+
 fun roman(n: Int): String {
     var result = ""
     var p = n
@@ -387,3 +388,18 @@ fun thirdnumber(q: Int): String {
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String = TODO()
+
+fun number(p: Int): String {
+    return when (p % 10) {
+        1->"один"
+        2->"два"
+        3->"три"
+        4->"четыре"
+        5->"пять"
+        6->"шесть"
+        7->"семь"
+        8->"восемь"
+        9->"девять"
+        else -> ""
+    }
+}

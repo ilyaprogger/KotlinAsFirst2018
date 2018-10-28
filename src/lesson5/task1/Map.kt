@@ -94,7 +94,14 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *     mapOf("Emergency" to "911", "Police" to "02")
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
-fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> = TODO()
+fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
+    val mapC = (mapA + mapB).toMutableMap()
+    for ((key, value) in mapA) {
+        if (value != mapB[key] && mapB.containsKey(key))
+            mapC[key] = "$value, ${mapB[key]}"
+    }
+    return mapC
+}
 
 /**
  * Простая
@@ -106,7 +113,15 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   buildGrades(mapOf("Марат" to 3, "Семён" to 5, "Михаил" to 5))
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
-fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
+fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
+    val newMap = mutableMapOf<Int, List<String>>()
+    for (key in grades) {
+        newMap[key.value] = newMap.getOrDefault(key.value, listOf()) + key.key
+    }
+    for (name in newMap) newMap[name.key] = name.value.sortedDescending()
+    return newMap
+}
+
 
 /**
  * Простая
@@ -118,7 +133,7 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
+fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = a.all { it.value == b[it.key] }
 
 /**
  * Средняя
