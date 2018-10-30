@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import org.omg.CORBA.ARG_IN.value
+
 /**
  * Пример
  *
@@ -149,7 +151,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
     val resMap = mutableMapOf<String, Double>()
     val newMap = mutableMapOf<String, List<Double>>()
     for ((q, p) in stockPrices)
-        newMap[q] = newMap.getOrDefault(q, mutableListOf()) + p
+        newMap[q] = newMap.getOrDefault(q, listOf()) + p
     for ((p, q) in newMap) {
         val pq = q.sum() / q.size
         resMap[p] = pq
@@ -172,7 +174,18 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
+    var minVal = Double.MAX_VALUE
+    var str = ""
+    for ((q, p) in stuff) {
+        if (p.first != kind) return null
+        else if (p.second < minVal) {
+            minVal = p.second
+            str = q
+        }
+    }
+    return str
+}
 
 /**
  * Сложная

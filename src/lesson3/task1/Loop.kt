@@ -133,17 +133,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var k = 1
-    for (m in 2..sqrt(n.toDouble()).toInt()) {
-        if (n % m == 0)
-            for (i in n / 2 downTo k) {
-                if (n % i == 0 && k < i)
-                    k = i
-            }
-    }
-    return k
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая
@@ -162,10 +152,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
             q %= p
         }
     }
-    return when {
-        q + p == 1 -> true
-        else -> false
-    }
+    return  q + p == 1
 }
 
 /**
