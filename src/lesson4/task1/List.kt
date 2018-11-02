@@ -149,10 +149,11 @@ fun mean(list: List<Double>): Double =
 fun center(list: MutableList<Double>): MutableList<Double> {
     val p = mean(list)
     for (i in 0 until list.size) {
-        list[i] = list[i] - p
+        list[i] -= p
     }
     return list
 }
+
 
 /**
  * Средняя
@@ -210,12 +211,12 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
  */
 fun factorize(n: Int): List<Int> {
     var q = n
-    var p = 0
     val list = mutableListOf<Int>()
     while (q != 1) {
-        list.add(minDivisor(q))
-        q /= list[p]
-        p++
+        var p = 2
+        while (q % p != 0) p++
+        list.add(p)
+        q /= p
     }
     return list
 }
@@ -240,12 +241,11 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     val list = mutableListOf<Int>()
     var p = n
-    if (n != 0) {
-        while (p != 0) {
-            list.add(p % base)
-            p /= base
-        }
-    } else list.add(0)
+    if (n == 0) return listOf()
+    while (p != 0) {
+        list.add(p % base)
+        p /= base
+    }
     return list.reversed()
 }
 
@@ -257,19 +257,11 @@ fun convert(n: Int, base: Int): List<Int> {
  * строчными буквами: 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
-fun convertToString(n: Int, base: Int): String {
-    var q = ""
-    var p = n
-    while (p != 0) {
-        val num = p % base
-        if (num < 10)
-            q += num.toString()
-        else q += ('a' + (num - 10))
-        p /= base
-    }
-    if (n == 0) q = "0"
-    return q.reversed()
-}
+fun convertToString(n: Int, base: Int): String =
+        convert(n, base).joinToString(
+                separator = "",
+                transform = { if (it > 9) ('a' + it - 10).toString() else "$it" })
+
 
 /**
  * Средняя
@@ -298,15 +290,15 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * Например: str = "13c", base = 14 -> 250
  */
 fun decimalFromString(str: String, base: Int): Int {
-    var p = 0
-    var q = 1
+    var value = 0
+    var number = 1
     str.reversed().forEach {
         val bam = if (it <= '9') it - '0'
         else (it + 10 - 'a')
-        p += bam * q
-        q *= base
+        value += bam * number
+        number *= base
     }
-    return p
+    return value
 }
 
 

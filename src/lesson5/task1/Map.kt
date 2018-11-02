@@ -3,6 +3,7 @@
 package lesson5.task1
 
 import org.omg.CORBA.ARG_IN.value
+import javax.print.attribute.SetOfIntegerSyntax
 
 /**
  * Пример
@@ -211,7 +212,20 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  *          "Mikhail" to setOf("Sveta", "Marat")
  *        )
  */
-fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
+fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> {
+    val newMap = mutableMapOf<String, MutableSet<String>>()
+    for (q in friends) {
+        newMap[q.key] = q.value.toMutableSet()
+        for (p in q.value) {
+            if (friends.containsKey(p))
+                newMap[q.key] = (newMap[q.key]!! + friends[p]!!).toMutableSet()
+            else
+                newMap[q.key] = mutableSetOf()
+        }
+    }
+    newMap.map { if (it.value.contains(it.key)) it.value.remove(it.key) }
+    return newMap
+}
 
 /**
  * Простая

@@ -4,9 +4,7 @@ package lesson3.task1
 
 import lesson1.task1.sqr
 import lesson7.task1.markdownToHtml
-import kotlin.math.PI
-import kotlin.math.abs
-import kotlin.math.sqrt
+import kotlin.math.*
 
 /**
  * Пример
@@ -143,16 +141,12 @@ fun maxDivisor(n: Int): Int = n / minDivisor(n)
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    var p = m
-    var q = n
-    while ((q != 0) && (p != 0)) {
-        if (p > q) {
-            p %= q
-        } else {
-            q %= p
-        }
-    }
-    return  q + p == 1
+    val minValue = min(m, n)
+    val maxValue = max(m, n)
+    for (i in 2..sqrt(minValue.toDouble()).toInt())
+        if (n % i == 0 && m % i == 0)
+            return false
+    return minValue == 1 || maxValue % minValue != 0
 }
 
 /**
@@ -163,12 +157,10 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-    val q = false
-    for (i in 0..sqrt(n.toDouble()).toInt()) {
-        if (sqr(i) <= n && sqr(i) >= m)
-            return true
-    }
-    return q
+    for (q in sqrt(m.toDouble()).toInt()..sqrt(m.toDouble()).toInt() + 1)
+        if (q * q in m..n) return true
+    return false
+
 }
 
 /**
@@ -303,12 +295,7 @@ fun squareSequenceDigit(n: Int): Int {
         q++
         num += digitNumber(q * q)
     }
-    var m = 1
-    while (num > n) {
-        m *= 10
-        num -= 1
-    }
-    return q * q / m % 10
+    return sqr(q) / 10.0.pow(num - n.toDouble()).toInt() % 10
 }
 
 /**
@@ -327,10 +314,5 @@ fun fibSequenceDigit(n: Int): Int {
         q++
         num += digitNumber(fib(q))
     }
-    var m = 1
-    while (num > n) {
-        m *= 10
-        num -= 1
-    }
-    return fib(q) / m % 10
+    return fib(q) / 10.0.pow(num - n.toDouble()).toInt() % 10
 }

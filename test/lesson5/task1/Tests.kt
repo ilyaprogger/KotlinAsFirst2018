@@ -203,12 +203,13 @@ class Tests {
                 mapOf(
                         "Marat" to setOf("Mikhail", "Sveta"),
                         "Sveta" to setOf("Mikhail"),
-                        "Mikhail" to setOf()
+                        "Mikhail" to setOf("Marat", "Sveta")
                 ),
                 propagateHandshakes(
                         mapOf(
                                 "Marat" to setOf("Sveta"),
-                                "Sveta" to setOf("Mikhail")
+                                "Sveta" to setOf("Mikhail"),
+                                "Mikhail" to setOf("Marat")
                         )
                 )
         )
