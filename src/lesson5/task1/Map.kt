@@ -216,12 +216,7 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
     val newMap = mutableMapOf<String, MutableSet<String>>()
     for (q in friends) {
         newMap[q.key] = q.value.toMutableSet()
-        for (p in q.value) {
-            if (friends.containsKey(p))
-                newMap[q.key] = (newMap[q.key]!! + friends[p]!!).toMutableSet()
-            else
-                newMap[q.key] = mutableSetOf()
-        }
+
     }
     newMap.map { if (it.value.contains(it.key)) it.value.remove(it.key) }
     return newMap
