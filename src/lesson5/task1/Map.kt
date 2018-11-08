@@ -2,8 +2,11 @@
 
 package lesson5.task1
 
+import com.sun.xml.internal.bind.v2.runtime.reflect.Lister
 import org.omg.CORBA.ARG_IN.value
+import java.security.KeyStore
 import javax.print.attribute.SetOfIntegerSyntax
+import kotlin.math.absoluteValue
 
 /**
  * Пример
@@ -212,14 +215,35 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  *          "Mikhail" to setOf("Sveta", "Marat")
  *        )
  */
-fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> {
-    val newMap = mutableMapOf<String, MutableSet<String>>()
-    for (q in friends) {
-        newMap[q.key] = q.value.toMutableSet()
+fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
+/*public static Map<String, Set<String>> handsShake (Map < String, Set<String» friends)run {
+    Map<String, Set<String>> newMap = new HashMap<>();
+    for (Map. KeyStore.Entry<String, Set<String>> pair : friends . entrySet ()){
+    Set<String> result = new HashSet<>(pair.getValue());
+    Set<String> toFind = new HashSet<>();
+    Set<String> cheked = new HashSet<>();
+    cheked.add(pair.getKey());
+    toFind.addAll(pair.getValue());
+    while (!toFind.isEmpty()) {
+        Set<String> newToFind = new HashSet<>();
+        for (String p : toFind){
+            if (!cheked.contains(p)) {
+                result.add(p);
+                cheked.add(p);
+                for (String q : friends.get(p)){
+                    if (!cheked.contains(q))
+                        newToFind.add(q);
+                }
+            }
+        }
+        toFind = newToFind;
     }
-    newMap.map { if (it.value.contains(it.key)) it.value.remove(it.key) }
-    return newMap
+    newMap.put(pair.getKey(), result);
 }
+    return newMap;
+}
+}*/
+
 
 /**
  * Простая
@@ -270,7 +294,20 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean =
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
+fun extractRepeats(list: List<String>): Map<String, Int> {
+    val newMap = mutableMapOf<String, Int>()
+    for (i in 0 until list.size) {
+        var a = 0
+        for (j in 0 until list.size) {
+            if (list[i].equals(list[j])) {
+                a++
+                if (a > 1)
+                    newMap.put(list[i], a)
+            }
+        }
+    }
+    return newMap
+}
 
 /**
  * Средняя
@@ -281,7 +318,16 @@ fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
  * Например:
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
-fun hasAnagrams(words: List<String>): Boolean = TODO()
+fun hasAnagrams(words: List<String>): Boolean {
+    for (i in 0 until words.size) {
+        for (j in 0 until words.size) {
+            if (words[i].equals(words[j].reversed())) {
+                return true
+            }
+        }
+    }
+    return false
+}
 
 /**
  * Сложная
@@ -300,7 +346,19 @@ fun hasAnagrams(words: List<String>): Boolean = TODO()
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    if (list.isNotEmpty()) {
+        for (i in 0 until list.size) {
+            for (j in 0 until list.size) {
+                if (j != i) {
+                    if (list[i] + list[j] == number)
+                        return i to j
+                }
+            }
+        }
+    }
+    return -1 to -1
+}
 
 /**
  * Очень сложная

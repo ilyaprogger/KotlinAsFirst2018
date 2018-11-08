@@ -141,12 +141,9 @@ fun maxDivisor(n: Int): Int = n / minDivisor(n)
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    val minValue = min(m, n)
-    val maxValue = max(m, n)
-    for (i in 2..sqrt(minValue.toDouble()).toInt())
-        if (n % i == 0 && m % i == 0)
-            return false
-    return minValue == 1 || maxValue % minValue != 0
+    return if (m == 0) n == 1
+    else
+        isCoPrime(m, n % m)
 }
 
 /**
@@ -160,7 +157,6 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
     for (q in sqrt(m.toDouble()).toInt()..sqrt(m.toDouble()).toInt() + 1)
         if (q * q in m..n) return true
     return false
-
 }
 
 /**
@@ -291,11 +287,13 @@ fun hasDifferentDigits(n: Int): Boolean {
 fun squareSequenceDigit(n: Int): Int {
     var q = 0
     var num = 0
+    var p = 0
     while (num < n) {
         q++
-        num += digitNumber(q * q)
+        p = q * q
+        num += digitNumber(p)
     }
-    return sqr(q) / 10.0.pow(num - n.toDouble()).toInt() % 10
+    return p / 10.0.pow(num - n.toDouble()).toInt() % 10
 }
 
 /**
@@ -308,11 +306,13 @@ fun squareSequenceDigit(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int {
-    var q = 0
     var num = 0
+    var q = 0
+    var p = 0
     while (num < n) {
         q++
-        num += digitNumber(fib(q))
+        p = fib(q)
+        num += digitNumber(p)
     }
-    return fib(q) / 10.0.pow(num - n.toDouble()).toInt() % 10
+    return p / 10.0.pow(num - n.toDouble()).toInt() % 10
 }
