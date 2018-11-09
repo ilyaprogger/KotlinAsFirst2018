@@ -4,7 +4,6 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
-import lesson3.task1.minDivisor
 import java.lang.Math.pow
 import kotlin.math.sqrt
 
@@ -290,15 +289,12 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * Например: str = "13c", base = 14 -> 250
  */
 fun decimalFromString(str: String, base: Int): Int {
-    var result = 0
-    var number = 1
-    str.reversed().forEach {
-        val value = if (it <= '9') it - '0'
-        else (it + 10 - 'a')
-        result += value * number
-        number *= base
+    val list = mutableListOf<Int>()
+    for (i in str) {
+        if (i <= '9') list.add(i - '0')
+        else list.add(i + 10 - 'a')
     }
-    return result
+    return decimal(list, base)
 }
 
 
@@ -313,64 +309,33 @@ fun decimalFromString(str: String, base: Int): Int {
 val romeList = listOf("I", "V", "X", "L", "C", "D", "M")
 
 fun roman(n: Int): String {
-    var result = ""
-    var p = n
-    result += firstNumber(p) + secondNumber(p) + thirdNumber(p)
-    if (p > 999) {
-        while (p > 0) {
-            p -= 1000
+    var p = 0
+    var q = n
+    var result = firstNumber(q, p) + firstNumber(q / 10, p + 2) + firstNumber(q / 100, p + 4)
+    if (q > 999) {
+        while (q > 0) {
+            q -= 1000
             result += romeList[6]
-            if (p < 999) break
+            if (q < 999) break
         }
     }
     return result.reversed()
 }
 
-fun firstNumber(q: Int): String {
+fun firstNumber(q: Int, p: Int): String {
     return when (q % 10) {
-        1 -> romeList[0]
-        2 -> romeList[0] + romeList[0]
-        3 -> romeList[0] + romeList[0] + romeList[0]
-        4 -> romeList[1] + romeList[0]
-        5 -> romeList[1]
-        6 -> romeList[0] + romeList[1]
-        7 -> romeList[0] + romeList[0] + romeList[1]
-        8 -> romeList[0] + romeList[0] + romeList[0] + romeList[1]
-        9 -> romeList[2] + romeList[0]
+        1 -> romeList[p]
+        2 -> romeList[p] + romeList[p]
+        3 -> romeList[p] + romeList[p] + romeList[p]
+        4 -> romeList[p + 1] + romeList[p]
+        5 -> romeList[p + 1]
+        6 -> romeList[p] + romeList[p + 1]
+        7 -> romeList[p] + romeList[p] + romeList[p + 1]
+        8 -> romeList[p] + romeList[p] + romeList[p] + romeList[p + 1]
+        9 -> romeList[p + 2] + romeList[p]
         else -> ""
     }
 }
-
-fun secondNumber(q: Int): String {
-    return when ((q / 10) % 10) {
-        1 -> romeList[2]
-        2 -> romeList[2] + romeList[2]
-        3 -> romeList[2] + romeList[2] + romeList[2]
-        4 -> romeList[3] + romeList[2]
-        5 -> romeList[3]
-        6 -> romeList[2] + romeList[3]
-        7 -> romeList[2] + romeList[2] + romeList[3]
-        8 -> romeList[2] + romeList[2] + romeList[2] + romeList[3]
-        9 -> romeList[4] + romeList[2]
-        else -> ""
-    }
-}
-
-fun thirdNumber(q: Int): String {
-    return when ((q / 100) % 10) {
-        1 -> romeList[4]
-        2 -> romeList[4] + romeList[4]
-        3 -> romeList[4] + romeList[4] + romeList[4]
-        4 -> romeList[5] + romeList[4]
-        5 -> romeList[5]
-        6 -> romeList[4] + romeList[5]
-        7 -> romeList[4] + romeList[4] + romeList[5]
-        8 -> romeList[4] + romeList[4] + romeList[4] + romeList[5]
-        9 -> romeList[6] + romeList[4]
-        else -> ""
-    }
-}
-
 
 /**
  * Очень сложная

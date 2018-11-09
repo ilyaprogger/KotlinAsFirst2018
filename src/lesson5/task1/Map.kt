@@ -218,7 +218,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
 fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
 /*public static Map<String, Set<String>> handsShake (Map < String, Set<String» friends)run {
     Map<String, Set<String>> newMap = new HashMap<>();
-    for (Map. KeyStore.Entry<String, Set<String>> pair : friends . entrySet ()){
+    for (Map.Entry<String, Set<String>> pair : friends.entrySet ()){
     Set<String> result = new HashSet<>(pair.getValue());
     Set<String> toFind = new HashSet<>();
     Set<String> cheked = new HashSet<>();
