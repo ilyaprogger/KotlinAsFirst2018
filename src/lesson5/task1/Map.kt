@@ -2,12 +2,8 @@
 
 package lesson5.task1
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister
-import org.omg.CORBA.ARG_IN.value
 import java.lang.StringBuilder
-import java.security.KeyStore
-import javax.print.attribute.SetOfIntegerSyntax
-import kotlin.math.absoluteValue
+
 
 /**
  * Пример
