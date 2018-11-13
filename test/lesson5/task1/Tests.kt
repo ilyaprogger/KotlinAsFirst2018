@@ -181,6 +181,12 @@ class Tests {
     @Test
     @Tag("Normal")
     fun findCheapestStuff() {
+        assertEquals(
+                "-s0\\\"=z#TdG+voT7,xy`t'%p_n aoz\$/\\trp11E-u?XX~*LP'#.Iafms[Q_.Yxc^1uy5TU\\n4lwWNE6H[br}7-nw9f\\tOVj+5e_,Aok>wY%'+QE4?Q]v?4,#6,B.qJZ\$)j#Q8^)[g-ZMx k/0,^jR*'%p8/D3l ((P7?V]fjC?*s hD!.4\\\\nt=IF`XQu#/d>EhACgC\\nM3J{\\\"aHRe\\tMn",
+                findCheapestStuff(
+                        mapOf("-s0\\\"=z#TdG+voT7,xy`t'%p_n aoz\$/\\trp11E-u?XX~*LP'#.Iafms[Q_.Yxc^1uy5TU\\n4lwWNE6H[br}7-nw9f\\tOVj+5e_,Aok>wY%'+QE4?Q]v?4,#6,B.qJZ\$)j#Q8^)[g-ZMx k/0,^jR*'%p8/D3l ((P7?V]fjC?*s hD!.4\\\\nt=IF`XQu#/d>EhACgC\\nM3J{\\\"aHRe\\tMn" to ("ж" to 2.220446049250313e-16), "Орео" to ("печенье" to 100.0)),
+                        "ж"
+                ))
         assertNull(
                 findCheapestStuff(
                         mapOf("Мария" to ("печенье" to 20.0), "Орео" to ("печенье" to 100.0)),
@@ -194,6 +200,8 @@ class Tests {
                         "печенье"
                 )
         )
+
+
     }
 
     @Test
@@ -319,8 +327,8 @@ class Tests {
                 setOf("Кубок"),
                 bagPacking(
                         mapOf("Слиток" to (1000 to 5000), "Кубок" to (500 to 2000)),
-                850
-        )
+                        850
+                )
         )
         assertEquals(
                 emptySet<String>(),

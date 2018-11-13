@@ -4,6 +4,7 @@ package lesson5.task1
 
 import com.sun.xml.internal.bind.v2.runtime.reflect.Lister
 import org.omg.CORBA.ARG_IN.value
+import java.lang.StringBuilder
 import java.security.KeyStore
 import javax.print.attribute.SetOfIntegerSyntax
 import kotlin.math.absoluteValue
@@ -181,14 +182,19 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
 fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
     var minVal = Double.MAX_VALUE
     val str = StringBuilder()
+    var value = 0
     for ((q, p) in stuff) {
-        if (p.first != kind) return null
-        else if (p.second < minVal) {
-            minVal = p.second
-            str.append(q)
+        if (p.first == kind) {
+            if (p.second <= minVal) {
+                minVal = p.second
+                str.append(q)
+                value++
+            }
         }
     }
-    return str.toString()
+    return if (value == 0) null
+    else
+        str.toString()
 }
 
 /**
@@ -317,18 +323,7 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  * Например:
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
-fun hasAnagrams(words: List<String>): Boolean {
-    for (i in 0 until words.size) {
-        for (j in 0 until words.size) {
-            if (i != j) {
-                if (words[i].equals(words[j].reversed())) {
-                    return true
-                }
-            }
-        }
-    }
-    return false
-}
+fun hasAnagrams(words: List<String>): Boolean = TODO()
 
 /**
  * Сложная
