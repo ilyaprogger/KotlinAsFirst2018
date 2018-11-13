@@ -309,9 +309,8 @@ fun decimalFromString(str: String, base: Int): Int {
 val romeList = listOf("I", "V", "X", "L", "C", "D", "M")
 
 fun roman(n: Int): String {
-    val p = 0
     var q = n
-    var result = romanDigit(q, p) + romanDigit(q / 10, p + 2) + romanDigit(q / 100, p + 4)
+    var result = romanDigit(q, 0) + romanDigit(q / 10, 2) + romanDigit(q / 100, 4)
     if (q > 999) {
         while (q > 0) {
             q -= 1000

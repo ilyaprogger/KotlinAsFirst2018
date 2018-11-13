@@ -180,15 +180,15 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  */
 fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
     var minVal = Double.MAX_VALUE
-    var str = ""
+    val str = StringBuilder()
     for ((q, p) in stuff) {
         if (p.first != kind) return null
         else if (p.second < minVal) {
             minVal = p.second
-            str = q
+            str.append(q)
         }
     }
-    return str
+    return str.toString()
 }
 
 /**
@@ -244,7 +244,6 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
 }
 }*/
 
-
 /**
  * Простая
  *
@@ -280,7 +279,7 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> =
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean =
-        word.toSet().all { it -> it in chars.map { it }.toSet() }
+        word.toLowerCase().toSet().all { it -> it in chars.map { it.toLowerCase() }.toSet() }
 
 /**
  * Средняя
@@ -321,8 +320,10 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
 fun hasAnagrams(words: List<String>): Boolean {
     for (i in 0 until words.size) {
         for (j in 0 until words.size) {
-            if (words[i].equals(words[j].reversed())) {
-                return true
+            if (i != j) {
+                if (words[i].equals(words[j].reversed())) {
+                    return true
+                }
             }
         }
     }
@@ -379,4 +380,8 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    val newSet = mutableSetOf<String>()
+
+    return newSet
+}

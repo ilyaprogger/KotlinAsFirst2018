@@ -141,9 +141,9 @@ fun maxDivisor(n: Int): Int = n / minDivisor(n)
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    return if (m == 0) n == 1
+    return if (n == 0) m == 1
     else
-        isCoPrime(m, n % m)
+        isCoPrime(n, m % n)
 }
 
 
@@ -267,7 +267,7 @@ fun isPalindrome(n: Int) = n == revert(n)
 fun hasDifferentDigits(n: Int): Boolean {
     var p = n
     val q = false
-    while (p > 9) {
+    while (p >= 10) {
         if ((p / 10) % 10 != p % 10) {
             return true
         }
