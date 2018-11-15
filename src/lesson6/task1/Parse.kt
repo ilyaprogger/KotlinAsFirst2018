@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 /**
  * Пример
  *
@@ -49,12 +51,10 @@ fun main(args: Array<String>) {
         val seconds = timeStrToSeconds(line)
         if (seconds == -1) {
             println("Введённая строка $line не соответствует формату ЧЧ:ММ:СС")
-        }
-        else {
+        } else {
             println("Прошло секунд с начала суток: $seconds")
         }
-    }
-    else {
+    } else {
         println("Достигнут <конец файла> в процессе чтения строки. Программа прервана")
     }
 }
@@ -71,7 +71,23 @@ fun main(args: Array<String>) {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val com = str.split(" ")
+    val newMap = mapOf("января" to 1, "февраля" to 2, "марта" to 3, "апреля" to 4,
+            "мая" to 5, "июня" to 6, "июля" to 7, "августа" to 8, "сентября" to 9,
+            "октября" to 10, "ноября" to 11, "декабря" to 12)
+    when (com.size) {
+        3 -> {
+            val month = newMap[com[1]] ?: 0
+            val day = com[0].toIntOrNull()
+            val year = com[2].toIntOrNull()
+            return if (year == null || month == 0 || day == null || day !in 1..daysInMonth(month, year)) ""
+            else
+                String.format("%02d.%02d.%d", day, month, year)
+        }
+        else -> return ""
+    }
+}
 
 /**
  * Средняя
@@ -83,7 +99,25 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val com = digital.split(".")
+    val newMap = mapOf("01" to "января", "02" to "февраля", "03" to "марта", "04" to "апреля",
+            "05" to "мая", "06" to "июня", "07" to "июля", "08" to "августа", "09" to "сентября",
+            10 to "октября", 11 to "ноября", 12 to "декабря")
+    when (com.size) {
+        3 -> {
+            val month = newMap[com[1]]
+            val m = com[1].toIntOrNull()
+            val day = com[0].toIntOrNull()
+            val year = com[2].toIntOrNull()
+            return if (year == null || m == null || month == null || day == null || com[0].toInt() !in 1..daysInMonth(m, year)) ""
+            else
+                ("$day $month $year")
+        }
+        else -> return ""
+    }
+}
+
 
 /**
  * Средняя

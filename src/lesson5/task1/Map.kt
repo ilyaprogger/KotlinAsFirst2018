@@ -189,8 +189,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
         }
     }
     return if (value == 0) null
-    else
-        str.toString()
+    else str.toString()
 }
 
 /**
@@ -217,34 +216,33 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  *          "Mikhail" to setOf("Sveta", "Marat")
  *        )
  */
-fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
-/*public static Map<String, Set<String>> handsShake (Map < String, Set<String» friends)run {
-    Map<String, Set<String>> newMap = new HashMap<>();
-    for (Map.Entry<String, Set<String>> pair : friends.entrySet ()){
-    Set<String> result = new HashSet<>(pair.getValue());
-    Set<String> toFind = new HashSet<>();
-    Set<String> cheked = new HashSet<>();
-    cheked.add(pair.getKey());
-    toFind.addAll(pair.getValue());
-    while (!toFind.isEmpty()) {
-        Set<String> newToFind = new HashSet<>();
-        for (String p : toFind){
-            if (!cheked.contains(p)) {
-                result.add(p);
-                cheked.add(p);
-                for (String q : friends.get(p)){
-                    if (!cheked.contains(q))
-                        newToFind.add(q);
+fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> {
+    val newMap = HashMap<String, Set<String>>()
+    for (pair in friends) {
+        val result = HashSet<String>(pair.value)
+        var toFind = HashSet<String>()
+        val cheked = HashSet<String>()
+        cheked.add(pair.key)
+        toFind.addAll(pair.value)
+        while (!toFind.isEmpty()) {
+            val newToFind = HashSet<String>()
+            for (p in toFind) {
+                if (!cheked.contains(p)) {
+                    result.add(p)
+                    cheked.add(p)
+                    for (q in friends.keys) {
+                        if (!cheked.contains(q))
+                            newToFind.add(q)
+                    }
                 }
             }
+            toFind = newToFind
         }
-        toFind = newToFind;
+        newMap.put(pair.key, result)
     }
-    newMap.put(pair.getKey(), result);
+    return newMap
 }
-    return newMap;
-}
-}*/
+
 
 /**
  * Простая
@@ -371,8 +369,4 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
-    val newSet = mutableSetOf<String>()
-
-    return newSet
-}
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
