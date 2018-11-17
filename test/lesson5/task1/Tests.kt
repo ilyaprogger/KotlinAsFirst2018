@@ -285,6 +285,7 @@ class Tests {
                 emptyMap<String, Int>(),
                 extractRepeats(emptyList())
         )
+
         assertEquals(
                 mapOf("a" to 2),
                 extractRepeats(listOf("a", "b", "a"))
@@ -293,7 +294,12 @@ class Tests {
                 emptyMap<String, Int>(),
                 extractRepeats(listOf("a", "b", "c"))
         )
+        assertEquals(
+                mapOf("a" to 3,"b" to 3, "qwe" to 2),
+                extractRepeats(listOf("a", "b", "a", "a", "b", "b", "qwe", "qwe"))
+        )
     }
+
 
     @Test
     @Tag("Normal")

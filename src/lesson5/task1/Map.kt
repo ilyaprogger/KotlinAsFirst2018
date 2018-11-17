@@ -2,6 +2,7 @@
 
 package lesson5.task1
 
+import org.omg.CORBA.ARG_IN.value
 import java.lang.StringBuilder
 
 
@@ -177,19 +178,19 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  */
 fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
     var minVal = Double.MAX_VALUE
-    val str = StringBuilder()
-    var value = 0
+    var str = ""
+    var value = true
     for ((q, p) in stuff) {
         if (p.first == kind) {
             if (p.second <= minVal) {
                 minVal = p.second
-                str.append(q)
-                value++
+                str = q
+                value = false
             }
         }
     }
-    return if (value == 0) null
-    else str.toString()
+    return if (value) null
+    else str
 }
 
 /**
@@ -295,15 +296,13 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean =
  */
 fun extractRepeats(list: List<String>): Map<String, Int> {
     val newMap = mutableMapOf<String, Int>()
-    for (i in 0 until list.size) {
-        var a = 0
-        for (j in 0 until list.size) {
-            if (list[i].equals(list[j])) {
-                a++
-                if (a > 1)
-                    newMap.put(list[i], a)
-            }
-        }
+    var newList = list.sorted()
+    var q = 1
+    for (i in 0 until list.size - 1) {
+        if (newList[i] == newList[i + 1]) {
+            q++
+            newMap.put(newList[i], q)
+        } else q = 1
     }
     return newMap
 }
@@ -337,15 +336,11 @@ fun hasAnagrams(words: List<String>): Boolean = TODO()
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
-    if (list.isNotEmpty()) {
-        for (i in 0 until list.size) {
-            for (j in 0 until list.size) {
-                if (j != i) {
-                    if (list[i] + list[j] == number)
-                        return i to j
-                }
-            }
-        }
+    val newMap = HashMap<List<Int>, Int>()
+    newMap.put(list, number)
+    for (i in 0 until list.size) {
+        if (newMap.containsValue())
+            return i to 1
     }
     return -1 to -1
 }
