@@ -81,7 +81,8 @@ fun dateStrToDigit(str: String): String {
             val month = newMap[com[1]] ?: 0
             val day = com[0].toIntOrNull()
             val year = com[2].toIntOrNull()
-            if (year == null || month == 0 || day == null || day !in 1..daysInMonth(month, year)) ""
+            if (year == null || month == 0 || day == null ||
+                    day !in 1..daysInMonth(month, year)) ""
             else
                 String.format("%02d.%02d.%d", day, month, year)
         }
@@ -103,14 +104,15 @@ fun dateDigitToStr(digital: String): String {
     val com = digital.split(".")
     val newMap = mapOf("01" to "января", "02" to "февраля", "03" to "марта", "04" to "апреля",
             "05" to "мая", "06" to "июня", "07" to "июля", "08" to "августа", "09" to "сентября",
-            10 to "октября", 11 to "ноября", 12 to "декабря")
-    return when (com.size) {
-        3 -> {
+            "10" to "октября", "11" to "ноября", "12" to "декабря")
+    return when (com.size == 3) {
+        true -> {
             val month = newMap[com[1]]
             val m = com[1].toIntOrNull()
             val day = com[0].toIntOrNull()
             val year = com[2].toIntOrNull()
-            if (year == null || m == null || month == null || day == null || day !in 1..daysInMonth(m, year)) ""
+            if (year == null || m == null || month == null ||
+                    day == null || day !in 1..daysInMonth(m, year)) ""
             else
                 ("$day $month $year")
         }
