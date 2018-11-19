@@ -3,6 +3,7 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
+import kotlin.math.max
 
 /**
  * Пример
@@ -158,7 +159,6 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int = TODO()
-
 /**
  * Сложная
  *
@@ -192,7 +192,20 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше либо равны нуля.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    var str = description.split("; ")
+    if (description.isEmpty()) return ""
+    var a = " "
+    var p = 0.0
+    for (i in str) {
+        var newStr = i.split(" ")
+        if(newStr[1].toDouble() > p){
+            p = newStr[1].toDouble()
+            a = newStr[0]
+        }
+    }
+    return a
+}
 
 /**
  * Сложная
