@@ -2,6 +2,7 @@
 
 package lesson6.task1
 
+import jdk.nashorn.internal.objects.NativeArray.indexOf
 import lesson2.task2.daysInMonth
 import kotlin.math.max
 
@@ -74,18 +75,18 @@ fun main(args: Array<String>) {
  */
 fun dateStrToDigit(str: String): String {
     val com = str.split(" ")
-    val newMap = mapOf("января" to 1, "февраля" to 2, "марта" to 3, "апреля" to 4,
-            "мая" to 5, "июня" to 6, "июля" to 7, "августа" to 8, "сентября" to 9,
-            "октября" to 10, "ноября" to 11, "декабря" to 12)
+    val newList = listOf("января", "февраля", "марта", "апреля",
+            "мая", "июня", "июля", "августа", "сентября",
+            "октября", "ноября", "декабря")
     return when (com.size) {
         3 -> {
-            val month = newMap[com[1]] ?: 0
+            val month = newList.indexOf(com[1]) + 1
             val day = com[0].toIntOrNull()
             val year = com[2].toIntOrNull()
             if (year == null || month == 0 || day == null ||
                     day !in 1..daysInMonth(month, year)) ""
             else
-                String.format("%02d.%02d.%d", day, month, year)
+                String.format("%02d.%02d.%d", day, month , year)
         }
         else -> ""
     }
