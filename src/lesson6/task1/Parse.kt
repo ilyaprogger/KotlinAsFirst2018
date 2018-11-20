@@ -134,7 +134,17 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    try {
+        for (i in phone) {
+            if (i != '+')
+                i.toInt()
+        }
+    } catch (e: NumberFormatException) {
+        return ""
+    }
+    return phone.filter { it != ' ' && it != '-' && it != '(' && it != ')' }
+}
 
 /**
  * Средняя
@@ -159,6 +169,7 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int = TODO()
+
 /**
  * Сложная
  *
@@ -194,14 +205,17 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  */
 fun mostExpensive(description: String): String {
     var str = description.split("; ")
-    if (description.isEmpty()) return ""
-    var a = " "
+    var a = ""
     var p = 0.0
     for (i in str) {
         var newStr = i.split(" ")
-        if(newStr[1].toDouble() > p){
-            p = newStr[1].toDouble()
-            a = newStr[0]
+        try {
+            if (newStr[1].toDouble() > p) {
+                p = newStr[1].toDouble()
+                a = newStr[0]
+            }
+        } catch (e: IndexOutOfBoundsException) {
+            return ""
         }
     }
     return a

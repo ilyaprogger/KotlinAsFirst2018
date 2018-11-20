@@ -369,8 +369,7 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
     var resultSet = setOf<String>()
-    var newMap = mutableMapOf<String, Int>()
-    treasures.filter { it.value.first < capacity }
-    newMap = newMap.toSortedMap()
+    var newList =listOf<Int>()
+
     return resultSet
 }
