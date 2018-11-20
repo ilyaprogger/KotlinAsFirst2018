@@ -134,17 +134,8 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String {
-    try {
-        for (i in phone) {
-            if (i != '+')
-                i.toInt()
-        }
-    } catch (e: NumberFormatException) {
-        return ""
-    }
-    return phone.filter { it != ' ' && it != '-' && it != '(' && it != ')' }
-}
+fun flattenPhoneNumber(phone: String): String = TODO()
+
 
 /**
  * Средняя
@@ -210,7 +201,7 @@ fun mostExpensive(description: String): String {
     for (i in str) {
         var newStr = i.split(" ")
         try {
-            if (newStr[1].toDouble() > p) {
+            if (newStr[1].toDouble() >= p) {
                 p = newStr[1].toDouble()
                 a = newStr[0]
             }
