@@ -371,14 +371,14 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     var resultSet = setOf<String>()
     val treas = treasures.toList()
     var counter = 0
-    var newList: MutableList<MutableList<Pair<Set<String>, Int>>> = mutableListOf()
+    var newList = mutableListOf<MutableList<Pair<Set<String>, Int>>>()
     for (p in 0..treas.size) {
         newList = newList.plusElement(mutableListOf()).toMutableList()
         for (q in 0..capacity) {
             newList[p] = newList[p].plusElement(setOf<String>() to 0).toMutableList() //для каждого кладем 0
         }
     }
-    for (p in 0..treas.size - 1) {
+    for (p in 0 until treas.size) {
         for (q in 0..capacity) {
             if (treas[p].second.first <= q) {
                 if (newList[p][q].second <= newList[p][q - treas[p].second.first].second + treas[p].second.second) {

@@ -295,7 +295,7 @@ class Tests {
                 extractRepeats(listOf("a", "b", "c"))
         )
         assertEquals(
-                mapOf("a" to 3,"b" to 3, "qwe" to 2),
+                mapOf("a" to 3, "b" to 3, "qwe" to 2),
                 extractRepeats(listOf("a", "b", "a", "a", "b", "b", "qwe", "qwe"))
         )
     }
@@ -341,6 +341,16 @@ class Tests {
                 bagPacking(
                         mapOf("Кубок" to (500 to 2000), "Слиток" to (1000 to 5000)),
                         450
+                )
+        )
+        assertEquals(
+                setOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"),
+                bagPacking(
+                        mapOf("0" to (342 to 267), "1" to (1 to 148), "2" to (315 to 1), "3" to (1 to 1)
+                                , "4" to (2 to 1), "5" to (2 to 233), "6" to (344 to 148), "7" to (148 to 1)
+                                , "8" to (149 to 128), "9" to (1 to 1), "10" to (458 to 149), "11" to (149 to 149)
+                        ),
+                        3648
                 )
         )
     }
