@@ -61,12 +61,12 @@ class Tests {
     @Test
     @Tag("Normal")
     fun flattenPhoneNumber() {
-      /*  assertEquals("+79211234567", flattenPhoneNumber("+7 (921) 123-45-67"))
-        assertEquals("123456798", flattenPhoneNumber("12 --  34- 5 -- 67 -98"))*//*
-        assertEquals("", flattenPhoneNumber("ab-123"))*/
-        flattenPhoneNumber("ab-123")/*
+        assertEquals("+79211234567", flattenPhoneNumber("+7 (921) 123-45-67"))
+        assertEquals("123456798", flattenPhoneNumber("12 --  34- 5 -- 67 -98"))
+        assertEquals("", flattenPhoneNumber("ab-123"))
+        flattenPhoneNumber("ab-123")
         assertEquals("+12345", flattenPhoneNumber("+12 (3) 4-5"))
-        assertEquals("", flattenPhoneNumber("134_+874"))*/
+        assertEquals("", flattenPhoneNumber("134_+874"))
     }
 
     @Test
@@ -113,10 +113,10 @@ class Tests {
 
     @Test
     @Tag("Hard")
-    fun mostExpensive() {/*
+    fun mostExpensive() {
         assertEquals("", mostExpensive(""))
         assertEquals("Курица", mostExpensive("Хлеб 39.9; Молоко 62.5; Курица 184.0; Конфеты 89.9"))
-        assertEquals("Вино", mostExpensive("Вино 255.0"))*/
+        assertEquals("Вино", mostExpensive("Вино 255.0"))
         assertEquals("F4^e\\{*\\n_1L%cl\\\"sX1oHhdv=K!:%*Q|LE%a%,f~j,%%1XTpXx(B%mAx@[gb9LS@<5R%'%\$:&MyqjwnLn]ghPB|ZR%1^R/1q!~\"N-%V,7NVflhJjHI<oV4-dIUA#+g1>@^\\X:R%0Ir+##[Wa\$1oL:,ht=~a!r8*A|,}9@EcC-f>+fqmh~%bj04Fhv@%K~qCh+d}%s,Dsb)E/DW<h", mostExpensive("F4^e\\{*\\n_1L%cl\\\"sX1oHhdv=K!:%*Q|LE%a%,f~j,%%1XTpXx(B%mAx@[gb9LS@<5R%'%$:&MyqjwnLn]ghPB|ZR%1^R/1q!~\"N-%V,7NVflhJjHI<oV4-dIUA#+g1>@^\\X:R%0Ir+##[Wa$1oL:,ht=~a!r8*A|,}9@EcC-f>+fqmh~%bj04Fhv@%K~qCh+d}%s,Dsb)E/DW<h 0"))
     }
 

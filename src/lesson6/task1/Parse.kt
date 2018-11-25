@@ -4,7 +4,6 @@ package lesson6.task1
 
 import jdk.nashorn.internal.objects.NativeArray.indexOf
 import lesson2.task2.daysInMonth
-import kotlin.math.max
 
 /**
  * Пример
@@ -86,7 +85,7 @@ fun dateStrToDigit(str: String): String {
             if (year == null || month == 0 || day == null ||
                     day !in 1..daysInMonth(month, year)) ""
             else
-                String.format("%02d.%02d.%d", day, month , year)
+                String.format("%02d.%02d.%d", day, month, year)
         }
         else -> ""
     }
@@ -104,16 +103,19 @@ fun dateStrToDigit(str: String): String {
  */
 fun dateDigitToStr(digital: String): String {
     val com = digital.split(".")
-    val newMap = mapOf("01" to "января", "02" to "февраля", "03" to "марта", "04" to "апреля",
-            "05" to "мая", "06" to "июня", "07" to "июля", "08" to "августа", "09" to "сентября",
-            "10" to "октября", "11" to "ноября", "12" to "декабря")
+    val newList = listOf("января", "февраля", "марта", "апреля",
+            "мая", "июня", "июля", "августа", "сентября",
+            "октября", "ноября", "декабря")
     return when (com.size == 3) {
         true -> {
-            val month = newMap[com[1]]
+            var month = ""
+            if (com[1].toIntOrNull() ?: 0 > 0) {
+                month = newList[com[1].toInt() - 1]
+            }
             val m = com[1].toIntOrNull()
             val day = com[0].toIntOrNull()
             val year = com[2].toIntOrNull()
-            if (year == null || m == null || month == null ||
+            if (year == null || m == null || month == "" ||
                     day == null || day !in 1..daysInMonth(m, year)) ""
             else
                 ("$day $month $year")
@@ -196,19 +198,17 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * Все цены должны быть больше либо равны нуля.
  */
 fun mostExpensive(description: String): String {
-    var str = description.split("; ")
+    val str = description.split("; ")
     var a = ""
     var p = 0.0
     for (i in str) {
-        var newStr = i.split(" ")
-        try {
+        val newStr = i.split(" ")
+        if (newStr.size == 2) {
             if (newStr[1].toDouble() >= p) {
                 p = newStr[1].toDouble()
                 a = newStr[0]
             }
-        } catch (e: IndexOutOfBoundsException) {
-            return ""
-        }
+        } else return ""
     }
     return a
 }
