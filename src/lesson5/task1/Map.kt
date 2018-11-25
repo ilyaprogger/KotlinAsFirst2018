@@ -368,15 +368,29 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *   ) -> emptySet()
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
-    val resultSet = setOf<String>()
+    var resultSet = setOf<String>()
     val treas = treasures.toList()
-    var newList = mutableListOf<MutableList<Pair<Set<String>, Int>>>()
-    for (p in 0 until treas.size) {
-        newList = newList.plus(mutableListOf()).toMutableList()
+    var counter = 0
+    var newList: MutableList<MutableList<Pair<Set<String>, Int>>> = mutableListOf()
+    for (p in 0..treas.size) {
+        newList = newList.plusElement(mutableListOf()).toMutableList()
         for (q in 0..capacity) {
-            newList[p] = newList[p].plus(setOf<String>() to 0).toMutableList()
+            newList[p] = newList[p].plusElement(setOf<String>() to 0).toMutableList() //для каждого кладем 0
         }
     }
-    print(newList)
+    for (p in 0..treas.size - 1) {
+        for (q in 0..capacity) {
+            if (treas[p].second.first <= q) {
+                if (newList[p][q].second <= newList[p][q - treas[p].second.first].second + treas[p].second.second) {
+                    newList[p + 1][q] = (setOf(treas[p].first) + newList[p][q - treas[p].second.first].first) to
+                            newList[p][q - treas[p].second.first].second + treas[p].second.second              // перебираем вместимости, если вмещается выбираем класть или нет
+                } else newList[p + 1][q] = newList[p][q] //  не кладем
+            } else newList[p + 1][q] = newList[p][q]
+            if (newList[p + 1][q].second > counter) { // собираем максимально дорогой рюкзак
+                counter = newList[p + 1][q].second
+                resultSet = newList[p + 1][q].first
+            }
+        }
+    }
     return resultSet
 }
