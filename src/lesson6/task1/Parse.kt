@@ -109,7 +109,7 @@ fun dateDigitToStr(digital: String): String {
     return when (com.size == 3) {
         true -> {
             var month = ""
-            if (com[1].toIntOrNull() ?: 0 > 0) {
+            if (com[1].toIntOrNull() ?: 0 != 0 && com[1].toInt() <= 12) {
                 month = newList[com[1].toInt() - 1]
             }
             val m = com[1].toIntOrNull()
