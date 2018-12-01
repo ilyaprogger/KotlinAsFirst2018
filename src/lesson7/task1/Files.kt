@@ -54,10 +54,10 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  *
  */
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
-    val newSet = File(inputName).readText().toLowerCase()
+    val textWithLowerCase = File(inputName).readText().toLowerCase()
     val resultMap = mutableMapOf<String, Int>()
     for (q in substrings) {
-        val count = Regex(q.toLowerCase()).findAll(newSet)
+        val count = Regex(q.toLowerCase()).findAll(textWithLowerCase)
         resultMap[q] = count.toList().size
     }
     return resultMap
@@ -78,14 +78,11 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    /* val trueList = listOf("Жи", "Чу", "Ча", "Ши", "Ща", "Щу", "жи", "чу", "ча", "ши", "ща", "щу")
-     val falseList = listOf("Жы", "Чю", "Чя", "Шы", "Щя", "Щю", "жы", "чю", "чя", "шы", "щя", "щю")
-     val outputStream = File(outputName).bufferedWriter()
-     val inputFile = File(inputName).readLines().joinToString { it }
-     for (q in 0 until trueList.size) {
-         outputStream.write(Regex(falseList[q]).replace(inputFile, trueList[q]))
-     }
-     outputStream.close()*/
+    val newMap = mutableMapOf("Ы" to "И", "ы" to "и", "Я" to "А", "я" to "а", "ю" to "у", "Ю" to "У")
+    val result = File(outputName).bufferedWriter()
+    val reader = File(inputName).readText()
+    result.write(reader.replace(Regex("""(?<=[ЖЧШЩжчшщ])[ыяюЫЯЮ]""")) { newMap[it.value].toString() })
+    result.close()
 }
 
 /**

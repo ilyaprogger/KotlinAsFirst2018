@@ -307,7 +307,6 @@ fun decimalFromString(str: String, base: Int): Int {
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 val romeList = listOf("I", "V", "X", "L", "C", "D", "M")
-
 fun roman(n: Int): String {
     var q = n
     var result = romanDigit(q, 0) + romanDigit(q / 10, 2) + romanDigit(q / 100, 4)
@@ -320,7 +319,6 @@ fun roman(n: Int): String {
     }
     return result.reversed()
 }
-
 fun romanDigit(q: Int, p: Int): String {
     return when (q % 10) {
         1 -> romeList[p]

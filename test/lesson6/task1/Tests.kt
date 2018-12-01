@@ -52,7 +52,7 @@ class Tests {
         assertEquals("15 июля 2016", dateDigitToStr("15.07.2016"))
         assertEquals("", dateDigitToStr("01.02.20.19"))
         assertEquals("", dateDigitToStr("02.96.6942030"))
-        assertEquals("3 апреля 2011", dateDigitToStr("03.04.2011"))
+        assertEquals("", dateDigitToStr("01.-2.2016"))
         assertEquals("", dateDigitToStr("ab.cd.ef"))
 
     }
@@ -116,6 +116,7 @@ class Tests {
         assertEquals("", mostExpensive(""))
         assertEquals("Курица", mostExpensive("Хлеб 39.9; Молоко 62.5; Курица 184.0; Конфеты 89.9"))
         assertEquals("Вино", mostExpensive("Вино 255.0"))
+        assertEquals("", mostExpensive("Вино awq"))
         assertEquals("F4^e\\{*\\n_1L%cl\\\"sX1oHhdv=K!:%*Q|LE%a%,f~j,%%1XTpXx(B%mAx@[gb9LS@<5R%'%\$:&MyqjwnLn]ghPB|ZR%1^R/1q!~\"N-%V,7NVflhJjHI<oV4-dIUA#+g1>@^\\X:R%0Ir+##[Wa\$1oL:,ht=~a!r8*A|,}9@EcC-f>+fqmh~%bj04Fhv@%K~qCh+d}%s,Dsb)E/DW<h", mostExpensive("F4^e\\{*\\n_1L%cl\\\"sX1oHhdv=K!:%*Q|LE%a%,f~j,%%1XTpXx(B%mAx@[gb9LS@<5R%'%$:&MyqjwnLn]ghPB|ZR%1^R/1q!~\"N-%V,7NVflhJjHI<oV4-dIUA#+g1>@^\\X:R%0Ir+##[Wa$1oL:,ht=~a!r8*A|,}9@EcC-f>+fqmh~%bj04Fhv@%K~qCh+d}%s,Dsb)E/DW<h 0"))
     }
 
@@ -133,6 +134,7 @@ class Tests {
     @Test
     @Tag("Impossible")
     fun computeDeviceCells() {
+        assertThrows(IllegalArgumentException::class.java) { computeDeviceCells(10, "+>+>[+>", 3) }
         assertEquals(listOf(0, 0, 0, 0, 0, 1, 1, 1, 1, 1), computeDeviceCells(10, "+>+>+>+>+", 10000))
         assertEquals(listOf(-1, -1, -1, -1, -1, 0, 0, 0, 0, 0), computeDeviceCells(10, "<-<-<-<-<-", 10000))
         assertEquals(listOf(1, 1, 1, 1, 1, 0, 0, 0, 0, 0), computeDeviceCells(10, "- <<<<< +[>+]", 10000))

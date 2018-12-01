@@ -109,7 +109,7 @@ fun dateDigitToStr(digital: String): String {
     return when (com.size == 3) {
         true -> {
             var month = ""
-            if (com[1].toIntOrNull() ?: 0 != 0 && com[1].toInt() <= 12) {
+            if (com[1].toIntOrNull() != null && com[1].toInt() <= 12 && com[1].toInt() >= 0) {
                 month = newList[com[1].toInt() - 1]
             }
             val m = com[1].toIntOrNull()
@@ -204,7 +204,7 @@ fun mostExpensive(description: String): String {
     for (i in str) {
         val newStr = i.split(" ")
         if (newStr.size == 2) {
-            if (newStr[1].toDouble() >= p) {
+            if (newStr[1].toDoubleOrNull() != null && newStr[1].toDouble() >= p) {
                 p = newStr[1].toDouble()
                 a = newStr[0]
             }
@@ -225,6 +225,7 @@ fun mostExpensive(description: String): String {
  * Вернуть -1, если roman не является корректным римским числом
  */
 fun fromRoman(roman: String): Int = TODO()
+
 
 /**
  * Очень сложная
@@ -262,16 +263,64 @@ fun fromRoman(roman: String): Int = TODO()
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-var commandsList = listOf(">", "<", "+", "-", "[", "]", " ")
-
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     val resList = mutableListOf<Int>()
     var counter = 0
+    var limitCount = 0
+    var counter1 = 0
+    var counter2 = 0
+    for (i in commands) {
+        if (i == '[')
+            counter1++
+        if (i == ']')
+            counter2++
+    }
+    if (counter1 != counter2)
+        throw IllegalArgumentException()
     for (i in 0 until cells) {
         resList.add(0)
     }
-    val value = cells / 2
+    var value = cells / 2
+    while (limitCount < limit && counter < commands.length) {
+        when (commands[counter]) {
+            '>' -> value++
+            '<' -> value--
+            '+' -> resList[value]++
+            '-' -> resList[value]--
+            '[' -> if (resList[value] == 0) {
+                var check = 1
+                while (check > 0) {
+                    counter++
+
+                    if (commands[counter] == '[') {
+                        check++
+                    } else if (commands[counter] == ']') {
+                        check--
+                    }
+                }
+
+            }
+            ']' -> if (resList[value] != 0) {
+                var check = 1
+                while (check > 0) {
+                    counter--
+
+                    if (commands[counter] == '[') {
+                        check--
+                    } else if (commands[counter] == ']') {
+                        check++
+                    }
+                }
+            }
+            ' ' -> {
+            }// я не знаю как по другому избавиться от пробела  ;(
+            else -> throw IllegalArgumentException()
+        }
+        counter++
+        limitCount++
+        if (value < 0 || value >= cells)
+            throw IllegalStateException()
+    }
 
     return resList
 }
-

@@ -336,13 +336,11 @@ fun hasAnagrams(words: List<String>): Boolean = TODO()
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
-    val newSet = list.toMutableList()
-    newSet.forEach {
-        val resList = newSet - it
+    val changeList = list.toMutableList()
+    changeList.forEach {
+        val resList = changeList - it
         if (number - it in resList)
-            return if (list.indexOf(it) < resList.indexOf(number - it) + 1)
-                list.indexOf(it) to resList.indexOf(number - it) + 1
-            else resList.indexOf(number - it) + 1 to list.indexOf(it)
+            return list.indexOf(it) to resList.indexOf(number - it) + 1
     }
     return -1 to -1
 }
@@ -371,24 +369,24 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     var resultSet = setOf<String>()
     val treas = treasures.toList()
     var counter = 0
-    var newList = mutableListOf<MutableList<Pair<Set<String>, Int>>>()
+    var priceWeight = mutableListOf<MutableList<Pair<Set<String>, Int>>>()
     for (p in 0..treas.size) {
-        newList = newList.plusElement(mutableListOf()).toMutableList()
+        priceWeight = priceWeight.plusElement(mutableListOf()).toMutableList()
         for (q in 0..capacity) {
-            newList[p] = newList[p].plusElement(setOf<String>() to 0).toMutableList() //для каждого кладем 0
+            priceWeight[p] = priceWeight[p].plusElement(setOf<String>() to 0).toMutableList() //для каждого кладем 0
         }
     }
     for (p in 0 until treas.size) {
         for (q in 0..capacity) {
             if (treas[p].second.first <= q) {
-                if (newList[p][q].second <= newList[p][q - treas[p].second.first].second + treas[p].second.second) {
-                    newList[p + 1][q] = (setOf(treas[p].first) + newList[p][q - treas[p].second.first].first) to
-                            newList[p][q - treas[p].second.first].second + treas[p].second.second              // перебираем вместимости, если вмещается выбираем класть или нет
-                } else newList[p + 1][q] = newList[p][q] //  не кладем
-            } else newList[p + 1][q] = newList[p][q]
-            if (newList[p + 1][q].second > counter) { // собираем максимально дорогой рюкзак
-                counter = newList[p + 1][q].second
-                resultSet = newList[p + 1][q].first
+                if (priceWeight[p][q].second <= priceWeight[p][q - treas[p].second.first].second + treas[p].second.second) {
+                    priceWeight[p + 1][q] = (setOf(treas[p].first) + priceWeight[p][q - treas[p].second.first].first) to
+                            priceWeight[p][q - treas[p].second.first].second + treas[p].second.second              // перебираем вместимости, если вмещается выбираем класть или нет
+                } else priceWeight[p + 1][q] = priceWeight[p][q] //  не кладем
+            } else priceWeight[p + 1][q] = priceWeight[p][q]
+            if (priceWeight[p + 1][q].second > counter) { // собираем максимально дорогой рюкзак
+                counter = priceWeight[p + 1][q].second
+                resultSet = priceWeight[p + 1][q].first
             }
         }
     }
