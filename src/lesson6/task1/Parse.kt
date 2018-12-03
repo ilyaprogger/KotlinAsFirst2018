@@ -137,7 +137,12 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    return if (phone.filter { it != ' ' && it != '-' }
+                    .matches(Regex("""(\++)\d*|((\++)\d*+)\(\d*\)\d*|\d*""")))
+        Regex("""[\s-()]""").replace(phone, "")
+    else ""
+}
 
 
 /**
