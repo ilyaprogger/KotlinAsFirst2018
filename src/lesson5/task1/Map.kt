@@ -4,6 +4,7 @@ package lesson5.task1
 
 import org.omg.CORBA.ARG_IN.value
 import java.lang.StringBuilder
+import java.util.HashMap
 
 
 /**
@@ -219,12 +220,12 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  */
 fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> {
     val newMap = HashMap<String, Set<String>>()
-    for (pair in friends) {
-        val result = HashSet<String>(pair.value)
-        var toFind = HashSet<String>()
+    for ((key, value1) in friends) {
+        val result = HashSet(value1)
+        var toFind: MutableSet<String> = HashSet()
         val cheked = HashSet<String>()
-        cheked.add(pair.key)
-        toFind.addAll(pair.value)
+        cheked.add(key)
+        toFind.addAll(value1)
         while (!toFind.isEmpty()) {
             val newToFind = HashSet<String>()
             for (p in toFind) {
@@ -239,7 +240,7 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
             }
             toFind = newToFind
         }
-        newMap.put(pair.key, result)
+        newMap[key] = result
     }
     return newMap
 }
