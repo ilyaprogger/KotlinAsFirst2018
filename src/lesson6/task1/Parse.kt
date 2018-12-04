@@ -273,14 +273,16 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     var counter = 0
     var limitCount = 0
     var counter1 = 0
-    var counter2 = 0
     for (i in commands) {
         if (i == '[')
             counter1++
         if (i == ']')
-            counter2++
+            counter1--
+        if (counter1 < 0)
+            throw IllegalArgumentException()
     }
-    if (counter1 != counter2)
+
+    if (counter1 != 0)
         throw IllegalArgumentException()
     for (i in 0 until cells) {
         resList.add(0)
