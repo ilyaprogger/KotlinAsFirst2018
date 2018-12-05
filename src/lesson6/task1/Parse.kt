@@ -161,7 +161,7 @@ fun bestLongJump(jumps: String): Int {
     for (i in splitStrJumps) {
         if (i.contains(Regex("""[^\d-%]""")))
             return -1
-        else if (i.toIntOrNull() != null && i.toInt() > length)
+        else if (i.toIntOrNull() != null && i.toInt() >= length)
             length = i.toInt()
     }
     if (length == 0) return -1
@@ -190,7 +190,7 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    if (expression.contains(Regex("""[^\d\s-+]""")))
+    if (expression.contains(Regex("""[^\d\s-+]""")) || !expression.contains(Regex("""\d""")))
         throw IllegalArgumentException()
     if (expression.contains
             (Regex("""^\+|^-|\+$|-$|(\++)\s\+|(-+)\s-|(\++)\s-|(-+)\s\+|\d(?=\s\d)""")))

@@ -90,7 +90,10 @@ class Tests {
     @Test
     @Tag("Hard")
     fun plusMinus() {
-        assertThrows(IllegalArgumentException::class.java) { plusMinus("+2") }
+        assertThrows(IllegalArgumentException::class.java) {
+            plusMinus("+2")
+        }
+        assertThrows(IllegalArgumentException::class.java) { plusMinus("   ") }
         assertThrows(IllegalArgumentException::class.java) { plusMinus(" 1adasdw 244 4-") }
         assertThrows(IllegalArgumentException::class.java) { plusMinus("4 - -2") }
         assertThrows(IllegalArgumentException::class.java) { plusMinus("44 - - 12") }
