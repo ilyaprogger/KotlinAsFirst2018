@@ -155,7 +155,18 @@ fun flattenPhoneNumber(phone: String): String {
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    val splitStrJumps = jumps.split(" ")
+    var length = 0
+    for (i in splitStrJumps) {
+        if (i.contains(Regex("""[^\d-%]""")))
+            return -1
+        else if (i.toIntOrNull() != null && i.toInt() > length)
+            length = i.toInt()
+    }
+    if (length == 0) return -1
+    return length
+}
 
 /**
  * Сложная
@@ -178,7 +189,35 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    if (expression.contains(Regex("""[^\d\s-+]""")))
+        throw IllegalArgumentException()
+    if (expression.contains
+            (Regex("""^\+|^-|\+$|-$|(\++)\s\+|(-+)\s-|(\++)\s-|(-+)\s\+|\d(?=\s\d)""")))
+        throw IllegalArgumentException()
+    var num = true
+    var sum = 0
+    var char = ""
+    val exp = expression.split(" ")
+    for (i in exp) {
+        if (i.toIntOrNull() != null && num != false) {
+            sum = i.toInt()
+            num = false
+        }
+        if (i != "+" && i != "-") {
+            if (char == "+")
+                sum += i.toInt()
+            else if (char == "-")
+                sum -= i.toInt()
+
+        } else if (i == "+")
+            char = i
+        else if (i == "-")
+            char = i
+    }
+
+    return sum
+}
 
 /**
  * Сложная
