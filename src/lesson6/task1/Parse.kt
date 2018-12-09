@@ -245,7 +245,7 @@ fun mostExpensive(description: String): String {
     for (i in str) {
         val newStr = i.split(" ")
         if (newStr.size == 2) {
-            if (newStr[1].toDoubleOrNull() != null) return ""
+            if (newStr[1].toDoubleOrNull() == null) return ""
             if (newStr[1].toDouble() >= p) {
                 p = newStr[1].toDouble()
                 a = newStr[0]
