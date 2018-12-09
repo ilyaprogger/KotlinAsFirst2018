@@ -2,8 +2,6 @@
 
 package lesson5.task1
 
-import org.omg.CORBA.ARG_IN.value
-import java.lang.StringBuilder
 import java.util.HashMap
 
 
@@ -380,9 +378,11 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     for (p in 0 until treas.size) {
         for (q in 0..capacity) {
             if (treas[p].second.first <= q) {
-                if (priceWeight[p][q].second <= priceWeight[p][q - treas[p].second.first].second + treas[p].second.second) {
-                    priceWeight[p + 1][q] = (setOf(treas[p].first) + priceWeight[p][q - treas[p].second.first].first) to
-                            priceWeight[p][q - treas[p].second.first].second + treas[p].second.second              // перебираем вместимости, если вмещается выбираем класть или нет
+                val cost = treas[p].second.first
+                val weight = treas[p].second.second
+                if (priceWeight[p][q].second <= priceWeight[p][q - cost].second + weight) {
+                    priceWeight[p + 1][q] = (setOf(treas[p].first) + priceWeight[p][q - cost].first) to
+                            priceWeight[p][q - cost].second + weight            // перебираем вместимости, если вмещается выбираем класть или нет
                 } else priceWeight[p + 1][q] = priceWeight[p][q] //  не кладем
             } else priceWeight[p + 1][q] = priceWeight[p][q]
             if (priceWeight[p + 1][q].second > counter) { // собираем максимально дорогой рюкзак

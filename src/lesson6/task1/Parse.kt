@@ -2,7 +2,6 @@
 
 package lesson6.task1
 
-import jdk.nashorn.internal.objects.NativeArray.indexOf
 import lesson2.task2.daysInMonth
 
 /**
@@ -109,7 +108,7 @@ fun dateDigitToStr(digital: String): String {
     return when (com.size == 3) {
         true -> {
             var month = ""
-            if (com[1].toIntOrNull() != null && com[1].toInt() <= 12 && com[1].toInt() >= 0) {
+            if (com[1].toIntOrNull() != null && com[1].toInt() <= 12 && com[1].toInt() > 0) {
                 month = newList[com[1].toInt() - 1]
             }
             val m = com[1].toIntOrNull()
@@ -137,12 +136,11 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String {
-    return if (phone.filter { it != ' ' && it != '-' }
-                    .matches(Regex("""(\++)\d*|((\++)\d*+)\(\d*\)\d*|\d*""")))
-        Regex("""[\s-()]""").replace(phone, "")
-    else ""
-}
+fun flattenPhoneNumber(phone: String): String =
+        if (phone.filter { it != ' ' && it != '-' }
+                        .matches(Regex("""(\++)\d*|((\++)\d*+)\(\d*\)\d*|\d*""")))
+            Regex("""[\s-()]""").replace(phone, "")
+        else ""
 
 
 /**
@@ -159,7 +157,7 @@ fun bestLongJump(jumps: String): Int {
     val splitStrJumps = jumps.split(" ")
     var length = -1
     for (i in splitStrJumps) {
-        if (i.contains(Regex("""[^\d-%]""")))
+        if (i.contains(Regex("""[^\d-%]|(-+)-|(%+)-|(%+)%|(-+)%|(\d+)-|(\d+)%|(%+)\d|(-+)\d""")))
             return -1
         else if (i.toIntOrNull() != null && i.toInt() > length)
             length = i.toInt()
@@ -192,14 +190,14 @@ fun plusMinus(expression: String): Int {
     if (expression.contains(Regex("""[^\d\s-+]""")) || !expression.contains(Regex("""\d""")))
         throw IllegalArgumentException()
     if (expression.contains
-            (Regex("""^\+|^-|\+$|-$|(\++)\s\+|(-+)\s-|(\++)\s-|(-+)\s\+|\d(?=\s\d)""")))
+            (Regex("""^\+|^-|\+$|-$|(\++)\s\+|(-+)\s-|(\++)\s-|(-+)\s\+|\d(?=\s\d)|(\++)\+|(-+)-|(\++)-|(-+)\+""")))
         throw IllegalArgumentException()
     var num = true
     var sum = 0
     var char = ""
     val exp = expression.split(" ")
     for (i in exp) {
-        if (i.toIntOrNull() != null && num != false) {
+        if (i.toIntOrNull() != null && num) {
             sum = i.toInt()
             num = false
         }
@@ -247,7 +245,8 @@ fun mostExpensive(description: String): String {
     for (i in str) {
         val newStr = i.split(" ")
         if (newStr.size == 2) {
-            if (newStr[1].toDoubleOrNull() != null && newStr[1].toDouble() >= p) {
+            if (newStr[1].toDoubleOrNull() != null) return ""
+            if (newStr[1].toDouble() >= p) {
                 p = newStr[1].toDouble()
                 a = newStr[0]
             }
