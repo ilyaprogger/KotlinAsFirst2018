@@ -158,12 +158,16 @@ fun alignFileByWidth(inputName: String, outputName: String) {
                 spaceValue += " "
             }
             for (p in 0 until words) {
-                writer.append(word[p] + spaceValue + if (p < remainder) " " else "")
+                if (p < remainder)
+                    writer.append(word[p] + spaceValue + " ")
+                else
+                    writer.append(word[p] + spaceValue + "")
+
             }
             writer.appendln(word.last())
         }
     }
-writer.close()
+    writer.close()
 }
 
 /**
