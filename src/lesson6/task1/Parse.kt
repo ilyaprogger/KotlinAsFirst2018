@@ -3,6 +3,7 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
+import java.lang.StringBuilder
 
 /**
  * Пример
@@ -138,10 +139,9 @@ fun dateDigitToStr(digital: String): String {
  */
 fun flattenPhoneNumber(phone: String): String =
         if (phone.filter { it != ' ' && it != '-' }
-                        .matches(Regex("""(\++)\d*|((\++)\d*+)\(\d*\)\d*|\d*""")))
+                        .matches(Regex("""(\+)\d*|((\+)\d+)\(\d*\)\d*|\d*""")))
             Regex("""[\s-()]""").replace(phone, "")
         else ""
-
 
 /**
  * Средняя
@@ -207,9 +207,10 @@ fun plusMinus(expression: String): Int {
             else if (char == "-")
                 sum -= i.toInt()
 
-        } else if (i == "+")
+        }
+        if (i == "+")
             char = i
-        else if (i == "-")
+        if (i == "-")
             char = i
     }
 
@@ -368,3 +369,4 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
 
     return resList
 }
+
