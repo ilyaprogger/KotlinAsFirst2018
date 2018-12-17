@@ -3,10 +3,7 @@
 package lesson8.task1
 
 import lesson1.task1.sqr
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.sqrt
+import kotlin.math.*
 
 /**
  * Точка на плоскости
@@ -19,6 +16,7 @@ data class Point(val x: Double, val y: Double) {
      */
     fun distance(other: Point): Double = sqrt(sqr(x - other.x) + sqr(y - other.y))
 }
+
 
 /**
  * Треугольник, заданный тремя точками (a, b, c, см. constructor ниже).
@@ -78,14 +76,17 @@ data class Circle(val center: Point, val radius: Double) {
      * расстояние между их центрами минус сумма их радиусов.
      * Расстояние между пересекающимися окружностями считать равным 0.0.
      */
-    fun distance(other: Circle): Double = TODO()
+    fun distance(other: Circle): Double =
+            if (center.distance(other.center) - (radius + other.radius) <= 0) 0.0
+            else abs(center.distance(other.center) - (radius + other.radius))
 
     /**
      * Тривиальная
      *
      * Вернуть true, если и только если окружность содержит данную точку НА себе или ВНУТРИ себя
      */
-    fun contains(p: Point): Boolean = TODO()
+
+    fun contains(p: Point): Boolean = p.distance(center) <= radius
 }
 
 /**
@@ -105,7 +106,20 @@ data class Segment(val begin: Point, val end: Point) {
  * Дано множество точек. Вернуть отрезок, соединяющий две наиболее удалённые из них.
  * Если в множестве менее двух точек, бросить IllegalArgumentException
  */
-fun diameter(vararg points: Point): Segment = TODO()
+fun diameter(vararg points: Point): Segment {
+    if (points.size < 2) throw IllegalArgumentException()
+    var diametr = Segment(points[0], points[0])
+    var counter = points[0].distance(points[0])
+    for (p in 0..points.size - 2) {
+        for (q in p + 1 until points.size) {
+            if (points[p].distance(points[q]) > counter) {
+                counter = points[p].distance(points[q])
+                diametr = Segment(points[p], points[q])
+            }
+        }
+    }
+    return diametr
+}
 
 /**
  * Простая
@@ -174,7 +188,20 @@ fun bisectorByPoints(a: Point, b: Point): Line = TODO()
  * Задан список из n окружностей на плоскости. Найти пару наименее удалённых из них.
  * Если в списке менее двух окружностей, бросить IllegalArgumentException
  */
-fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> = TODO()
+fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
+    if (circles.size < 2) throw IllegalArgumentException()
+    var minRange = Pair(circles[0], circles[1])
+    var counter = circles[1].distance(circles[0])
+    for (p in 0..circles.size - 2) {
+        for (q in p + 1 until circles.size) {
+            if (circles[p].distance(circles[q]) < counter) {
+                counter = circles[p].distance(circles[q])
+                minRange = Pair(circles[p], circles[q])
+            }
+        }
+    }
+    return minRange
+}
 
 /**
  * Сложная
