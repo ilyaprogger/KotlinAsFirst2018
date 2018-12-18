@@ -278,7 +278,6 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> =
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean =
         word.toLowerCase().toSet().all { it -> it in chars.map { it.toLowerCase() }.toSet() }
-
 /**
  * Средняя
  *
@@ -366,26 +365,26 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     var resultSet = setOf<String>()
     val treas = treasures.toList()
     var counter = 0
-    var priceWeight = mutableListOf<MutableList<Pair<Set<String>, Int>>>()
+    val priceWeight = mutableListOf<MutableList<Pair<Set<String>, Int>>>()
     for (p in 0..treas.size) {
-        priceWeight = priceWeight.plusElement(mutableListOf()).toMutableList()
+        priceWeight.add(mutableListOf())
         for (q in 0..capacity) {
-            priceWeight[p] = priceWeight[p].plusElement(setOf<String>() to 0).toMutableList() //для каждого кладем 0
+            priceWeight[p].add(setOf<String>() to 0)//для каждого кладем 0
         }
     }
     for (p in 0 until treas.size) {
-        for (q in 0..capacity) {
-            if (treas[p].second.first <= q) {
-                val weight = treas[p].second.first
-                val cost = treas[p].second.second
-                if (priceWeight[p][q].second <= priceWeight[p][q - weight].second + cost) {
-                    priceWeight[p + 1][q] = (setOf(treas[p].first) + priceWeight[p][q - weight].first) to
-                            priceWeight[p][q - weight].second + cost            // перебираем вместимости, если вмещается выбираем класть или нет
-                } else priceWeight[p + 1][q] = priceWeight[p][q] //  не кладем
-            } else priceWeight[p + 1][q] = priceWeight[p][q]
-            if (priceWeight[p + 1][q].second > counter) { // собираем максимально дорогой рюкзак
-                counter = priceWeight[p + 1][q].second
-                resultSet = priceWeight[p + 1][q].first
+        for (capacityBag in 0..capacity) {
+            val weightTreas = treas[p].second.first
+            if (weightTreas <= capacityBag) {
+                val costTreas = treas[p].second.second
+                if (priceWeight[p][capacityBag].second <= priceWeight[p][capacityBag - weightTreas].second + costTreas) {
+                    priceWeight[p + 1][capacityBag] = (setOf(treas[p].first) + priceWeight[p][capacityBag - weightTreas].first) to
+                            priceWeight[p][capacityBag - weightTreas].second + costTreas            // перебираем вместимости, если вмещается выбираем класть или нет
+                } else priceWeight[p + 1][capacityBag] = priceWeight[p][capacityBag] //  не кладем
+            } else priceWeight[p + 1][capacityBag] = priceWeight[p][capacityBag]
+            if (priceWeight[p + 1][capacityBag].second > counter) { // собираем максимально дорогой рюкзак
+                counter = priceWeight[p + 1][capacityBag].second
+                resultSet = priceWeight[p + 1][capacityBag].first
             }
         }
     }
