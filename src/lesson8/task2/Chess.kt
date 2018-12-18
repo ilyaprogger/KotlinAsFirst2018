@@ -2,6 +2,8 @@
 
 package lesson8.task2
 
+import kotlin.math.abs
+
 /**
  * Клетка шахматной доски. Шахматная доска квадратная и имеет 8 х 8 клеток.
  * Поэтому, обе координаты клетки (горизонталь row, вертикаль column) могут находиться в пределах от 1 до 8.
@@ -35,7 +37,10 @@ data class Square(val column: Int, val row: Int) {
  * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
  * Если нотация некорректна, бросить IllegalArgumentException
  */
-fun square(notation: String): Square = TODO()
+fun square(notation: String): Square = if (notation.contains(Regex("""[^1-8a-h]"""))) throw IllegalArgumentException()
+else
+    Square(notation[0] - 'a' + 1, notation[1] - '0')
+
 
 /**
  * Простая
@@ -143,7 +148,45 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
  * Пример: kingMoveNumber(Square(3, 1), Square(6, 3)) = 3.
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
-fun kingMoveNumber(start: Square, end: Square): Int = TODO()
+fun kingMoveNumber(start: Square, end: Square): Int {
+    if (start.notation() == "" || end.notation() == "") throw IllegalArgumentException()
+    var countRow = start.row
+    var countColumn = start.column
+    var counter = 0
+    while (countRow < end.row && countColumn < end.column) {
+        countRow++
+        countColumn++
+        counter++
+    }
+    while (countRow < end.row && countColumn > end.column) {
+        countColumn--
+        countRow++
+        counter++
+    }
+    while (countRow > end.row && countColumn < end.column) {
+        countRow--
+        countColumn++
+        counter++
+    }
+    while (countRow > end.row && countColumn > end.column) {
+        countColumn--
+        countRow--
+        counter++
+    }
+    if (countRow > end.row && countColumn == end.column) {
+        counter += countRow - end.row
+    }
+    if (countRow < end.row && countColumn == end.column) {
+        counter += countRow - end.row
+    }
+    if (countRow == end.row && countColumn > end.column) {
+        counter += end.column - countColumn
+    }
+    if (countRow == end.row && countColumn < end.column) {
+        counter += end.column - countColumn
+    }
+    return counter
+}
 
 /**
  * Сложная
@@ -159,7 +202,57 @@ fun kingMoveNumber(start: Square, end: Square): Int = TODO()
  *          kingTrajectory(Square(3, 5), Square(6, 2)) = listOf(Square(3, 5), Square(4, 4), Square(5, 3), Square(6, 2))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun kingTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun kingTrajectory(start: Square, end: Square): List<Square> {
+    val resList = mutableListOf<Square>()
+    var countRow = start.row
+    var countColumn = start.column
+    resList.add(Square(countColumn, countRow))
+
+    while (countRow < end.row && countColumn < end.column) {
+        countRow++
+        countColumn++
+        resList.add(Square(countColumn, countRow))
+    }
+    while (countRow < end.row && countColumn > end.column) {
+        countColumn--
+        countRow++
+        resList.add(Square(countColumn, countRow))
+    }
+    while (countRow > end.row && countColumn < end.column) {
+        countRow--
+        countColumn++
+        resList.add(Square(countColumn, countRow))
+    }
+    while (countRow > end.row && countColumn > end.column) {
+        countColumn--
+        countRow--
+        resList.add(Square(countColumn, countRow))
+    }
+    if (countRow > end.row && countColumn == end.column) {
+        while (countRow > end.row) {
+            countRow--
+            resList.add(Square(countColumn, countRow))
+        }
+    }
+    if (countRow < end.row && countColumn == end.column) {
+        while (countRow < end.row) {
+            countRow++
+            resList.add(Square(countColumn, countRow))
+        }
+    }
+    if (countRow == end.row && countColumn > end.column) {
+        while (countColumn > end.column) {
+            countColumn--
+            resList.add(Square(countColumn, countRow))
+        }
+    }
+    if (countRow == end.row && countColumn < end.column) {
+        while (countColumn < end.column)
+            countColumn++
+        resList.add(Square(countColumn, countRow))
+    }
+    return resList
+}
 
 /**
  * Сложная
