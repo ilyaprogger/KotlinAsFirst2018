@@ -307,6 +307,7 @@ fun decimalFromString(str: String, base: Int): Int {
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 val romeList = listOf("I", "V", "X", "L", "C", "D", "M")
+
 fun roman(n: Int): String {
     var q = n
     var result = romanDigit(q, 0) + romanDigit(q / 10, 2) + romanDigit(q / 100, 4)
@@ -319,6 +320,7 @@ fun roman(n: Int): String {
     }
     return result.reversed()
 }
+
 fun romanDigit(q: Int, p: Int): String {
     return when (q % 10) {
         1 -> romeList[p]
@@ -354,17 +356,15 @@ fun russian(n: Int): String {
     val fourth = listOf("", " сто", " двести", " триста", " четыреста", " пятьсот",
             " шестьсот", " семьсот", " восемьсот", " девятьсот")
     result += fourth[num[5]] +
-            if (num[4] == 1) second[num[3]] else third[num[4]] +
-                    if (num[4] != 1) {
-                        if (num[3] != 1 && num[3] != 2) first[num[3]] else first[12 - num[3]]
-                    } else ""
-
+            if (num[4] == 1) second[num[3]] else third[num[4]] + when (num[4]) {
+                1 -> ""
+                else -> if (num[3] != 1 && num[3] != 2) first[num[3]] else first[12 - num[3]]
+            }
     if (num[3] != 0 || num[4] != 0 || num[5] != 0) result += if (num[4] != 1) when {
         num[3] == 1 -> " тысяча"
         num[3] == 2 || num[3] == 3 || num[3] == 4 -> " тысячи"
         else -> " тысяч"
     } else " тысяч"
-
     result += fourth[num[2]] + if (num[1] == 1) second[num[0]] else third[num[1]] +
             if (num[1] != 1) first[num[0]] else ""
     return result.trim()

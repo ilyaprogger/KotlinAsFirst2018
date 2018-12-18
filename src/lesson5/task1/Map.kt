@@ -242,6 +242,7 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
     }
     return newMap
 }
+
 /**
  * Простая
  *
@@ -278,6 +279,7 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> =
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean =
         word.toLowerCase().toSet().all { it -> it in chars.map { it.toLowerCase() }.toSet() }
+
 /**
  * Средняя
  *
