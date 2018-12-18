@@ -3,6 +3,7 @@
 package lesson8.task2
 
 import kotlin.math.abs
+import kotlin.math.max
 
 /**
  * Клетка шахматной доски. Шахматная доска квадратная и имеет 8 х 8 клеток.
@@ -37,7 +38,8 @@ data class Square(val column: Int, val row: Int) {
  * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
  * Если нотация некорректна, бросить IllegalArgumentException
  */
-fun square(notation: String): Square = if (notation.contains(Regex("""[^1-8a-h]"""))) throw IllegalArgumentException()
+fun square(notation: String): Square = if (notation.contains(Regex("""[^1-8a-h]"""))
+        || notation == "") throw IllegalArgumentException()
 else
     Square(notation[0] - 'a' + 1, notation[1] - '0')
 
@@ -148,45 +150,10 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
  * Пример: kingMoveNumber(Square(3, 1), Square(6, 3)) = 3.
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
-fun kingMoveNumber(start: Square, end: Square): Int {
-    if (start.notation() == "" || end.notation() == "") throw IllegalArgumentException()
-    var countRow = start.row
-    var countColumn = start.column
-    var counter = 0
-    while (countRow < end.row && countColumn < end.column) {
-        countRow++
-        countColumn++
-        counter++
-    }
-    while (countRow < end.row && countColumn > end.column) {
-        countColumn--
-        countRow++
-        counter++
-    }
-    while (countRow > end.row && countColumn < end.column) {
-        countRow--
-        countColumn++
-        counter++
-    }
-    while (countRow > end.row && countColumn > end.column) {
-        countColumn--
-        countRow--
-        counter++
-    }
-    if (countRow > end.row && countColumn == end.column) {
-        counter += countRow - end.row
-    }
-    if (countRow < end.row && countColumn == end.column) {
-        counter += countRow - end.row
-    }
-    if (countRow == end.row && countColumn > end.column) {
-        counter += end.column - countColumn
-    }
-    if (countRow == end.row && countColumn < end.column) {
-        counter += end.column - countColumn
-    }
-    return counter
-}
+fun kingMoveNumber(start: Square, end: Square): Int =
+        if (start.notation() == "" || end.notation() == "") throw IllegalArgumentException()
+        else max(abs(start.row - end.row), abs(start.column - end.column))
+
 
 /**
  * Сложная
@@ -206,50 +173,29 @@ fun kingTrajectory(start: Square, end: Square): List<Square> {
     val resList = mutableListOf<Square>()
     var countRow = start.row
     var countColumn = start.column
-    resList.add(Square(countColumn, countRow))
-
-    while (countRow < end.row && countColumn < end.column) {
-        countRow++
-        countColumn++
-        resList.add(Square(countColumn, countRow))
+    if (countRow == end.row && countColumn == end.column) {
+        return listOf(start)
     }
-    while (countRow < end.row && countColumn > end.column) {
-        countColumn--
-        countRow++
-        resList.add(Square(countColumn, countRow))
-    }
-    while (countRow > end.row && countColumn < end.column) {
-        countRow--
-        countColumn++
-        resList.add(Square(countColumn, countRow))
-    }
-    while (countRow > end.row && countColumn > end.column) {
-        countColumn--
-        countRow--
-        resList.add(Square(countColumn, countRow))
-    }
-    if (countRow > end.row && countColumn == end.column) {
-        while (countRow > end.row) {
-            countRow--
-            resList.add(Square(countColumn, countRow))
+    var a = 0
+    var b = true
+    while (a < max(abs(start.row - end.row), abs(start.column - end.column))) {
+        if (b) {
+            resList.add(start)
+            b = false
         }
-    }
-    if (countRow < end.row && countColumn == end.column) {
-        while (countRow < end.row) {
-            countRow++
-            resList.add(Square(countColumn, countRow))
+        when {
+            countRow > end.row && countColumn > end.column -> resList.add(Square(--countColumn, --countRow))
+            countRow < end.row && countColumn < end.column -> resList.add(Square(++countColumn, ++countRow))
+            countRow > end.row && countColumn < end.column -> resList.add(Square(++countColumn, --countRow))
+            countRow < end.row && countColumn > end.column -> resList.add(Square(--countColumn, ++countRow))
+            countRow == end.row && countColumn < end.column -> resList.add(Square(countColumn, --countRow))
+            countRow == end.row && countColumn > end.column -> resList.add(Square(countColumn, ++countRow))
+            countRow < end.row && countColumn == end.column -> resList.add(Square(--countColumn, countRow))
+            countRow > end.row && countColumn == end.column -> resList.add(Square(++countColumn, countRow))
+            else -> {
+            }
         }
-    }
-    if (countRow == end.row && countColumn > end.column) {
-        while (countColumn > end.column) {
-            countColumn--
-            resList.add(Square(countColumn, countRow))
-        }
-    }
-    if (countRow == end.row && countColumn < end.column) {
-        while (countColumn < end.column)
-            countColumn++
-        resList.add(Square(countColumn, countRow))
+        a++
     }
     return resList
 }

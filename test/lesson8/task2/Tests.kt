@@ -104,7 +104,7 @@ class Tests {
     @Test
     @Tag("Normal")
     fun kingMoveNumber() {
-        assertEquals(0, kingMoveNumber(square("e3"), square("e3")))
+        assertEquals(4, kingMoveNumber(square("a4"), square("a8")))
         assertEquals(1, kingMoveNumber(square("c2"), square("b1")))
         assertEquals(2, kingMoveNumber(square("g8"), square("f6")))
         assertEquals(6, kingMoveNumber(square("a8"), square("g8")))
@@ -127,7 +127,7 @@ class Tests {
     @Tag("Hard")
     fun kingTrajectory() {
         assertEquals(listOf(square("f3")), kingTrajectory(square("f3"), square("f3")))
-        kingTrajectory(square("c2"), square("a6")).assertKingTrajectory(square("c2"), square("a6"), 4)
+       kingTrajectory(square("c2"), square("a6")).assertKingTrajectory(square("c2"), square("a6"), 4)
         assertEquals(listOf(square("h2"), square("g3"), square("f4"), square("e5"), square("d6"), square("c7")),
                 kingTrajectory(square("h2"), square("c7")))
     }
