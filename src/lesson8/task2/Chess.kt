@@ -38,7 +38,7 @@ data class Square(val column: Int, val row: Int) {
  * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
  * Если нотация некорректна, бросить IllegalArgumentException
  */
-fun square(notation: String): Square = if (notation.contains(Regex("""[^1-8a-h]"""))
+fun square(notation: String): Square = if (notation.matches(Regex("""[^1-8a-h]"""))
         || notation == "") throw IllegalArgumentException()
 else
     Square(notation[0] - 'a' + 1, notation[1] - '0')
@@ -173,7 +173,7 @@ fun kingTrajectory(start: Square, end: Square): List<Square> {
     val resList = mutableListOf<Square>()
     var countRow = start.row
     var countColumn = start.column
-    if (countRow == end.row && countColumn == end.column) {
+    if (start == end) {
         return listOf(start)
     }
     var a = 0
@@ -184,17 +184,14 @@ fun kingTrajectory(start: Square, end: Square): List<Square> {
             b = false
         }
         when {
-            countRow > end.row && countColumn > end.column -> resList.add(Square(--countColumn, --countRow))
-            countRow < end.row && countColumn < end.column -> resList.add(Square(++countColumn, ++countRow))
-            countRow > end.row && countColumn < end.column -> resList.add(Square(++countColumn, --countRow))
-            countRow < end.row && countColumn > end.column -> resList.add(Square(--countColumn, ++countRow))
-            countRow == end.row && countColumn < end.column -> resList.add(Square(countColumn, --countRow))
-            countRow == end.row && countColumn > end.column -> resList.add(Square(countColumn, ++countRow))
-            countRow < end.row && countColumn == end.column -> resList.add(Square(--countColumn, countRow))
-            countRow > end.row && countColumn == end.column -> resList.add(Square(++countColumn, countRow))
-            else -> {
-            }
+            countRow > end.row -> countRow--
+            countRow < end.row -> countRow++
         }
+        when {
+            countColumn > end.column -> countColumn--
+            countColumn < end.column -> countColumn++
+        }
+        resList.add(Square(countColumn, countRow))
         a++
     }
     return resList
