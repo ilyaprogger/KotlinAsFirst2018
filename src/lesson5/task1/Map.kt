@@ -376,11 +376,11 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     for (p in 0 until treas.size) {
         for (q in 0..capacity) {
             if (treas[p].second.first <= q) {
-                val cost = treas[p].second.first
-                val weight = treas[p].second.second
-                if (priceWeight[p][q].second <= priceWeight[p][q - cost].second + weight) {
-                    priceWeight[p + 1][q] = (setOf(treas[p].first) + priceWeight[p][q - cost].first) to
-                            priceWeight[p][q - cost].second + weight            // перебираем вместимости, если вмещается выбираем класть или нет
+                val weight = treas[p].second.first
+                val cost = treas[p].second.second
+                if (priceWeight[p][q].second <= priceWeight[p][q - weight].second + cost) {
+                    priceWeight[p + 1][q] = (setOf(treas[p].first) + priceWeight[p][q - weight].first) to
+                            priceWeight[p][q - weight].second + cost            // перебираем вместимости, если вмещается выбираем класть или нет
                 } else priceWeight[p + 1][q] = priceWeight[p][q] //  не кладем
             } else priceWeight[p + 1][q] = priceWeight[p][q]
             if (priceWeight[p + 1][q].second > counter) { // собираем максимально дорогой рюкзак
