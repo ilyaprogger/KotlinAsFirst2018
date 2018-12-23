@@ -3,6 +3,7 @@
 package lesson7.task1
 
 import java.io.File
+import java.lang.StringBuilder
 
 /**
  * Пример
@@ -140,10 +141,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
     for (line in File(inputName).readLines()) {
         str.add(line.trim().replace(Regex("""(\s)\s+"""), " "))
     }
-    if (str.isNotEmpty()) for (i in str) {
-        if (max < i.length)
-            max = i.length
-    }
+    if (str.isNotEmpty()) for (i in str) if (max < i.length) max = i.length
     for (i in str) {
         val word = i.split(" ")
         if (i.length == max || word.size <= 1)
@@ -151,11 +149,11 @@ fun alignFileByWidth(inputName: String, outputName: String) {
         else {
             val words = word.size - 1
             val space = max - i.length
-            var spaceValue = ""
+            var spaceValue = StringBuilder()
             val division = space / words
             val remainder = space % words
             for (q in 0..division) {
-                spaceValue += " "
+                spaceValue.append(" ")
             }
             for (p in 0 until words) {
                 if (p < remainder)

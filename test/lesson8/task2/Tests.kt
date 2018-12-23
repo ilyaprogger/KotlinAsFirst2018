@@ -28,6 +28,7 @@ class Tests {
         assertEquals("g6", Square(7, 6).notation())
         assertEquals("a8", Square(1, 8).notation())
         assertEquals("h1", Square(8, 1).notation())
+        assertEquals("", Square(9, 147).notation())
     }
 
     @Test

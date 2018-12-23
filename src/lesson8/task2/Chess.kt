@@ -25,10 +25,7 @@ data class Square(val column: Int, val row: Int) {
      * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
      * Для клетки не в пределах доски вернуть пустую строку
      */
-    fun notation(): String {
-        return if (inside()) ('a' + column - 1).toString() + row
-        else ""
-    }
+    fun notation(): String = if (inside()) ('a' + column - 1).toString() + row else ""
 }
 
 /**
@@ -38,10 +35,9 @@ data class Square(val column: Int, val row: Int) {
  * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
  * Если нотация некорректна, бросить IllegalArgumentException
  */
-fun square(notation: String): Square = if (notation.matches(Regex("""[^1-8a-h]"""))
-        || notation == "") throw IllegalArgumentException()
-else
+fun square(notation: String): Square = if (notation.matches(Regex("""[a-h][1-8]""")))
     Square(notation[0] - 'a' + 1, notation[1] - '0')
+else throw IllegalArgumentException()
 
 
 /**
@@ -177,12 +173,8 @@ fun kingTrajectory(start: Square, end: Square): List<Square> {
         return listOf(start)
     }
     var a = 0
-    var b = true
-    while (a < max(abs(start.row - end.row), abs(start.column - end.column))) {
-        if (b) {
-            resList.add(start)
-            b = false
-        }
+    resList.add(start)
+    while (a < kingMoveNumber(start, end)) {
         when {
             countRow > end.row -> countRow--
             countRow < end.row -> countRow++
