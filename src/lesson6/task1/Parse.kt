@@ -201,6 +201,8 @@ fun plusMinus(expression: String): Int {
     var sum = 0
     var b = true
     val exp = expression.split(" ")
+    if (exp.size == 1 && exp[0].toIntOrNull() != null)
+        sum = exp[0].toInt()
     for (i in 0..exp.size - 3) {
         if (exp[i].toIntOrNull() != null && exp[i + 1] == "-") {
             if (b) {
