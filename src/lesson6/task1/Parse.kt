@@ -174,7 +174,17 @@ fun bestLongJump(jumps: String): Int {
  * Прочитать строку и вернуть максимальную взятую высоту (230 в примере).
  * При нарушении формата входной строки вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    if (!Regex("""(\d+\s+([%]*[+]|[%]+[-]|%|[+])\s*)+""").matches(jumps))
+        return -1
+    val a = jumps.split(" ")
+    var counter = 0
+    for (q in 0..a.size - 2) {
+        if (a[q].toIntOrNull() != null && a[q].toInt() > counter && a[q + 1] == "+")
+            counter = a[q].toInt()
+    }
+    return counter
+}
 
 /**
  * Сложная
@@ -186,10 +196,7 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    if (expression.contains(Regex("""[^\d\s-+]""")) || !expression.contains(Regex("""\d""")))
-        throw IllegalArgumentException()
-    if (expression.contains
-            (Regex("""^\+|^-|\+$|-$|(\++)\s\+|(-+)\s-|(\++)\s-|(-+)\s\+|\d(?=\s\d)|(\++)\+|(-+)-|(\++)-|(-+)\+""")))
+    if (!expression.matches(Regex("""((\d+)\s([+]|[-])\s+)+\d+|\d+""")))
         throw IllegalArgumentException()
     var num = true
     var sum = 0

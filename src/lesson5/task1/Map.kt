@@ -379,7 +379,7 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
             val weightTreas = treas[p].second.first
             if (weightTreas <= capacityBag) {
                 val costTreas = treas[p].second.second
-                if (priceWeight[p][capacityBag].second <= priceWeight[p][capacityBag - weightTreas].second + costTreas) {
+                if (priceWeight[p][capacityBag].second <= priceWeight[p][capacityBag - weightTreas].second + costTreas) {//Ищем максимальную стоимость для данного веса
                     priceWeight[p + 1][capacityBag] = (setOf(treas[p].first) + priceWeight[p][capacityBag - weightTreas].first) to
                             priceWeight[p][capacityBag - weightTreas].second + costTreas            // перебираем вместимости, если вмещается выбираем класть или нет
                 } else priceWeight[p + 1][capacityBag] = priceWeight[p][capacityBag] //  не кладем
