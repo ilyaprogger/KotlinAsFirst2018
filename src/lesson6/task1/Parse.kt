@@ -180,7 +180,7 @@ fun bestHighJump(jumps: String): Int {
     val a = jumps.split(" ")
     var counter = -1
     for (q in 0..a.size - 2) {
-        if (a[q].toIntOrNull() != null && a[q].toInt() > counter && a[q + 1] == "+")
+        if (a[q].toIntOrNull() != null && a[q].toInt() > counter && a[q + 1].matches(Regex("""[%]*[+]""")))
             counter = a[q].toInt()
     }
     return counter
