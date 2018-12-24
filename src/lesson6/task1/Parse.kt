@@ -198,25 +198,22 @@ fun bestHighJump(jumps: String): Int {
 fun plusMinus(expression: String): Int {
     if (!expression.matches(Regex("""((\d+)\s([+]|[-])\s+)+\d+|\d+""")))
         throw IllegalArgumentException()
-    var num = true
     var sum = 0
-    var char = ""
+    var b = true
     val exp = expression.split(" ")
-    for (i in exp) {
-        if (i.toIntOrNull() != null && num) {
-            sum = i.toInt()
-            num = false
+    for (i in 0..exp.size - 3) {
+        if (exp[i].toIntOrNull() != null && exp[i + 1] == "-") {
+            if (b) {
+                sum = exp[i].toInt() - exp[i + 2].toInt()
+                b = false
+            } else sum -= exp[i + 2].toInt()
         }
-        if (i != "+" && i != "-") {
-            if (char == "+")
-                sum += i.toInt()
-            else if (char == "-")
-                sum -= i.toInt()
+        if (exp[i].toIntOrNull() != null && exp[i + 1] == "+") {
+            if (b) {
+                sum = exp[i].toInt() + exp[i + 2].toInt()
+                b = false
+            } else sum += exp[i + 2].toInt()
         }
-        if (i == "+")
-            char = i
-        if (i == "-")
-            char = i
     }
 
     return sum

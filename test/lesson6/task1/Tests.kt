@@ -100,7 +100,7 @@ class Tests {
         assertThrows(IllegalArgumentException::class.java) { plusMinus("4 - 12a") }
         assertEquals(0, plusMinus("0"))
         assertEquals(4, plusMinus("2 + 2"))
-        assertEquals(6, plusMinus("2 + 31 - 40 + 13"))
+        assertEquals(4, plusMinus("2 + 31 - 40 + 13 - 1 - 1"))
         assertEquals(-1, plusMinus("0 - 1"))
 
     }
