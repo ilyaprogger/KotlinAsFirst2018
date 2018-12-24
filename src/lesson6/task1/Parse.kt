@@ -178,7 +178,7 @@ fun bestHighJump(jumps: String): Int {
     if (!Regex("""(\d+\s+([%]*[+]|[%]+[-]|%|[+])\s*)+""").matches(jumps))
         return -1
     val a = jumps.split(" ")
-    var counter = 0
+    var counter = -1
     for (q in 0..a.size - 2) {
         if (a[q].toIntOrNull() != null && a[q].toInt() > counter && a[q + 1] == "+")
             counter = a[q].toInt()
